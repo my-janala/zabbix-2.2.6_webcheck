@@ -50,7 +50,8 @@
 #define ZBX_PROCESS_TYPE_HEARTBEAT	19
 #define ZBX_PROCESS_TYPE_SELFMON	20
 #define ZBX_PROCESS_TYPE_VMWARE		21
-#define ZBX_PROCESS_TYPE_COUNT		22	/* number of process types */
+#define ZBX_PROCESS_TYPE_WEB		22
+#define ZBX_PROCESS_TYPE_COUNT		23	/* number of process types */
 #define ZBX_PROCESS_TYPE_UNKNOWN	255
 
 #define ZBX_AGGR_FUNC_ONE		0

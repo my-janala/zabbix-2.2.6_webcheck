@@ -42,6 +42,9 @@
 #include "checks_telnet.h"
 #include "checks_java.h"
 #include "checks_calculated.h"
+#ifdef HAVE_LIBCURL
+#       include "checks_web.h"
+#endif
 
 extern unsigned char	process_type;
 extern int		process_num;
@@ -75,6 +78,9 @@ static void	update_triggers_status_to_unknown(zbx_uint64_t hostid, zbx_item_type
 			break;
 		case ITEM_TYPE_JMX:
 			zbx_snprintf(failed_type_buf, sizeof(failed_type_buf), "%d", ITEM_TYPE_JMX);
+			break;
+		case ITEM_TYPE_WEB:
+			zbx_snprintf(failed_type_buf, sizeof(failed_type_buf), "%d", ITEM_TYPE_WEB);
 			break;
 		default:
 			/* we should never end up here */
@@ -470,6 +476,16 @@ static int	get_value(DC_ITEM *item, AGENT_RESULT *result)
 			break;
 		case ITEM_TYPE_CALCULATED:
 			res = get_value_calculated(item, result);
+			break;
+		case ITEM_TYPE_WEB:
+#ifdef HAVE_LIBCURL
+			alarm(CONFIG_POLLER_WEB_TIMEOUT);
+			res = get_value_web(item, result);
+			alarm(0);
+#else
+			SET_MSG_RESULT(result, zbx_strdup(NULL, "Support for cURL checks was not compiled in"));
+			res = NOTSUPPORTED;
+#endif /* HAVE_LIBCURL */
 			break;
 		default:
 			SET_MSG_RESULT(result, zbx_dsprintf(NULL, "Not supported item type:%d", item->type));

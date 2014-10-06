@@ -35,7 +35,8 @@
 #define	ZBX_POLLER_TYPE_IPMI		2
 #define	ZBX_POLLER_TYPE_PINGER		3
 #define	ZBX_POLLER_TYPE_JAVA		4
-#define	ZBX_POLLER_TYPE_COUNT		5	/* number of poller types */
+#define ZBX_POLLER_TYPE_WEB		5
+#define	ZBX_POLLER_TYPE_COUNT		6	/* number of poller types */
 
 #define MAX_JAVA_ITEMS		32
 #define MAX_SNMP_ITEMS		128
@@ -51,6 +52,7 @@ extern zbx_uint64_t	CONFIG_TRENDS_CACHE_SIZE;
 extern zbx_uint64_t	CONFIG_TEXT_CACHE_SIZE;
 
 extern int	CONFIG_POLLER_FORKS;
+extern int	CONFIG_POLLER_WEB_FORKS;
 extern int	CONFIG_UNREACHABLE_POLLER_FORKS;
 extern int	CONFIG_IPMIPOLLER_FORKS;
 extern int	CONFIG_JAVAPOLLER_FORKS;

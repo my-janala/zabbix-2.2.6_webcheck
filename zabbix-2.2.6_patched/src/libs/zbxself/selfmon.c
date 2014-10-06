@@ -52,6 +52,7 @@ static ZBX_MUTEX	sm_lock;
 
 extern char	*CONFIG_FILE;
 extern int	CONFIG_POLLER_FORKS;
+extern int	CONFIG_POLLER_WEB_FORKS;
 extern int	CONFIG_UNREACHABLE_POLLER_FORKS;
 extern int	CONFIG_IPMIPOLLER_FORKS;
 extern int	CONFIG_PINGER_FORKS;
@@ -95,6 +96,8 @@ int	get_process_type_forks(unsigned char proc_type)
 	{
 		case ZBX_PROCESS_TYPE_POLLER:
 			return CONFIG_POLLER_FORKS;
+		case ZBX_PROCESS_TYPE_WEB:
+			return CONFIG_POLLER_WEB_FORKS;
 		case ZBX_PROCESS_TYPE_UNREACHABLE:
 			return CONFIG_UNREACHABLE_POLLER_FORKS;
 		case ZBX_PROCESS_TYPE_IPMIPOLLER:
@@ -162,6 +165,8 @@ const char	*get_process_type_string(unsigned char proc_type)
 	{
 		case ZBX_PROCESS_TYPE_POLLER:
 			return "poller";
+		case ZBX_PROCESS_TYPE_WEB:
+			return "web poller";
 		case ZBX_PROCESS_TYPE_UNREACHABLE:
 			return "unreachable poller";
 		case ZBX_PROCESS_TYPE_IPMIPOLLER:

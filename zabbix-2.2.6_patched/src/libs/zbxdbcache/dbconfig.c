@@ -485,6 +485,11 @@ static unsigned char	poller_by_item(zbx_uint64_t proxy_hostid, unsigned char typ
 				break;
 
 			return ZBX_POLLER_TYPE_JAVA;
+		case ITEM_TYPE_WEB:
+			if( 0 == CONFIG_POLLER_WEB_FORKS)
+				break;
+
+		return ZBX_POLLER_TYPE_WEB;
 	}
 
 	return ZBX_NO_POLLER;
@@ -1298,7 +1303,8 @@ static void	DCsync_items(DB_RESULT result)
 			if (ZBX_POLLER_TYPE_UNREACHABLE == old_poller_type &&
 					(ZBX_POLLER_TYPE_NORMAL == item->poller_type ||
 					ZBX_POLLER_TYPE_IPMI == item->poller_type ||
-					ZBX_POLLER_TYPE_JAVA == item->poller_type))
+					ZBX_POLLER_TYPE_JAVA == item->poller_type ||
+					ZBX_POLLER_TYPE_WEB == item->poller_type))
 			{
 				item->poller_type = ZBX_POLLER_TYPE_UNREACHABLE;
 			}
@@ -4636,7 +4642,8 @@ int	DCconfig_get_poller_items(unsigned char poller_type, DC_ITEM *items)
 		int				disable_until, old_nextcheck;
 		unsigned char			old_poller_type;
 		const zbx_binary_heap_elem_t	*min;
-		ZBX_DC_HOST			*dc_host;
+		ZBX_DC_HOST                     *dc_host;
+	
 		ZBX_DC_ITEM			*dc_item;
 		static const ZBX_DC_ITEM	*dc_item_prev = NULL;
 
@@ -4701,7 +4708,8 @@ int	DCconfig_get_poller_items(unsigned char poller_type, DC_ITEM *items)
 		{
 			if (ZBX_POLLER_TYPE_NORMAL == poller_type ||
 					ZBX_POLLER_TYPE_IPMI == poller_type ||
-					ZBX_POLLER_TYPE_JAVA == poller_type)
+					ZBX_POLLER_TYPE_JAVA == poller_type ||
+					ZBX_POLLER_TYPE_WEB == poller_type)
 			{
 				old_poller_type = dc_item->poller_type;
 				dc_item->poller_type = ZBX_POLLER_TYPE_UNREACHABLE;
@@ -5016,7 +5024,8 @@ static void	DCrequeue_unreachable_item(ZBX_DC_ITEM *dc_item)
 
 	if (ZBX_POLLER_TYPE_NORMAL == dc_item->poller_type ||
 			ZBX_POLLER_TYPE_IPMI == dc_item->poller_type ||
-			ZBX_POLLER_TYPE_JAVA == dc_item->poller_type)
+			ZBX_POLLER_TYPE_JAVA == dc_item->poller_type ||
+			ZBX_POLLER_TYPE_WEB == dc_item->poller_type)
 	{
 		dc_item->poller_type = ZBX_POLLER_TYPE_UNREACHABLE;
 	}
