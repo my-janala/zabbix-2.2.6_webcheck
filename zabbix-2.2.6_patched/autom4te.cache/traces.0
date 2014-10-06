@@ -1,0 +1,3136 @@
+m4trace:/usr/share/aclocal/pkg.m4:26: -1- AC_DEFUN([PKG_PROG_PKG_CONFIG], [m4_pattern_forbid([^_?PKG_[A-Z_]+$])
+m4_pattern_allow([^PKG_CONFIG(_PATH)?$])
+AC_ARG_VAR([PKG_CONFIG], [path to pkg-config utility])dnl
+if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
+	AC_PATH_TOOL([PKG_CONFIG], [pkg-config])
+fi
+if test -n "$PKG_CONFIG"; then
+	_pkg_min_version=m4_default([$1], [0.9.0])
+	AC_MSG_CHECKING([pkg-config is at least version $_pkg_min_version])
+	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version; then
+		AC_MSG_RESULT([yes])
+	else
+		AC_MSG_RESULT([no])
+		PKG_CONFIG=""
+	fi
+		
+fi[]dnl
+])
+m4trace:/usr/share/aclocal/pkg.m4:56: -1- AC_DEFUN([PKG_CHECK_EXISTS], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
+if test -n "$PKG_CONFIG" && \
+    AC_RUN_LOG([$PKG_CONFIG --exists --print-errors "$1"]); then
+  m4_ifval([$2], [$2], [:])
+m4_ifvaln([$3], [else
+  $3])dnl
+fi])
+m4trace:/usr/share/aclocal/pkg.m4:82: -1- AC_DEFUN([_PKG_SHORT_ERRORS_SUPPORTED], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi[]dnl
+])
+m4trace:/usr/share/aclocal/pkg.m4:102: -1- AC_DEFUN([PKG_CHECK_MODULES], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
+AC_ARG_VAR([$1][_CFLAGS], [C compiler flags for $1, overriding pkg-config])dnl
+AC_ARG_VAR([$1][_LIBS], [linker flags for $1, overriding pkg-config])dnl
+
+pkg_failed=no
+AC_MSG_CHECKING([for $1])
+
+_PKG_CONFIG([$1][_CFLAGS], [cflags], [$2])
+_PKG_CONFIG([$1][_LIBS], [libs], [$2])
+
+m4_define([_PKG_TEXT], [Alternatively, you may set the environment variables $1[]_CFLAGS
+and $1[]_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.])
+
+if test $pkg_failed = yes; then
+        _PKG_SHORT_ERRORS_SUPPORTED
+        if test $_pkg_short_errors_supported = yes; then
+	        $1[]_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "$2" 2>&1`
+        else 
+	        $1[]_PKG_ERRORS=`$PKG_CONFIG --print-errors "$2" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$$1[]_PKG_ERRORS" >&AS_MESSAGE_LOG_FD
+
+	ifelse([$4], , [AC_MSG_ERROR(dnl
+[Package requirements ($2) were not met:
+
+$$1_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+_PKG_TEXT
+])],
+		[AC_MSG_RESULT([no])
+                $4])
+elif test $pkg_failed = untried; then
+	ifelse([$4], , [AC_MSG_FAILURE(dnl
+[The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+_PKG_TEXT
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.])],
+		[$4])
+else
+	$1[]_CFLAGS=$pkg_cv_[]$1[]_CFLAGS
+	$1[]_LIBS=$pkg_cv_[]$1[]_LIBS
+        AC_MSG_RESULT([yes])
+	ifelse([$3], , :, [$3])
+fi[]dnl
+])
+m4trace:/usr/share/aclocal-1.11/amversion.m4:14: -1- AC_DEFUN([AM_AUTOMAKE_VERSION], [am__api_version='1.11'
+dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
+dnl require some minimum version.  Point them to the right macro.
+m4_if([$1], [1.11.1], [],
+      [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
+])
+m4trace:/usr/share/aclocal-1.11/amversion.m4:33: -1- AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION], [AM_AUTOMAKE_VERSION([1.11.1])dnl
+m4_ifndef([AC_AUTOCONF_VERSION],
+  [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
+_AM_AUTOCONF_VERSION(m4_defn([AC_AUTOCONF_VERSION]))])
+m4trace:/usr/share/aclocal-1.11/auxdir.m4:47: -1- AC_DEFUN([AM_AUX_DIR_EXPAND], [dnl Rely on autoconf to set up CDPATH properly.
+AC_PREREQ([2.50])dnl
+# expand $ac_aux_dir to an absolute path
+am_aux_dir=`cd $ac_aux_dir && pwd`
+])
+m4trace:/usr/share/aclocal-1.11/cond.m4:15: -1- AC_DEFUN([AM_CONDITIONAL], [AC_PREREQ(2.52)dnl
+ ifelse([$1], [TRUE],  [AC_FATAL([$0: invalid condition: $1])],
+	[$1], [FALSE], [AC_FATAL([$0: invalid condition: $1])])dnl
+AC_SUBST([$1_TRUE])dnl
+AC_SUBST([$1_FALSE])dnl
+_AM_SUBST_NOTMAKE([$1_TRUE])dnl
+_AM_SUBST_NOTMAKE([$1_FALSE])dnl
+m4_define([_AM_COND_VALUE_$1], [$2])dnl
+if $2; then
+  $1_TRUE=
+  $1_FALSE='#'
+else
+  $1_TRUE='#'
+  $1_FALSE=
+fi
+AC_CONFIG_COMMANDS_PRE(
+[if test -z "${$1_TRUE}" && test -z "${$1_FALSE}"; then
+  AC_MSG_ERROR([[conditional "$1" was never defined.
+Usually this means the macro was only invoked conditionally.]])
+fi])])
+m4trace:/usr/share/aclocal-1.11/depend.m4:28: -1- AC_DEFUN([_AM_DEPENDENCIES], [AC_REQUIRE([AM_SET_DEPDIR])dnl
+AC_REQUIRE([AM_OUTPUT_DEPENDENCY_COMMANDS])dnl
+AC_REQUIRE([AM_MAKE_INCLUDE])dnl
+AC_REQUIRE([AM_DEP_TRACK])dnl
+
+ifelse([$1], CC,   [depcc="$CC"   am_compiler_list=],
+       [$1], CXX,  [depcc="$CXX"  am_compiler_list=],
+       [$1], OBJC, [depcc="$OBJC" am_compiler_list='gcc3 gcc'],
+       [$1], UPC,  [depcc="$UPC"  am_compiler_list=],
+       [$1], GCJ,  [depcc="$GCJ"  am_compiler_list='gcc3 gcc'],
+                   [depcc="$$1"   am_compiler_list=])
+
+AC_CACHE_CHECK([dependency style of $depcc],
+               [am_cv_$1_dependencies_compiler_type],
+[if test -z "$AMDEP_TRUE" && test -f "$am_depcomp"; then
+  # We make a subdir and do the tests there.  Otherwise we can end up
+  # making bogus files that we don't know about and never remove.  For
+  # instance it was reported that on HP-UX the gcc test will end up
+  # making a dummy file named `D' -- because `-MD' means `put the output
+  # in D'.
+  mkdir conftest.dir
+  # Copy depcomp to subdir because otherwise we won't find it if we're
+  # using a relative directory.
+  cp "$am_depcomp" conftest.dir
+  cd conftest.dir
+  # We will build objects and dependencies in a subdirectory because
+  # it helps to detect inapplicable dependency modes.  For instance
+  # both Tru64's cc and ICC support -MD to output dependencies as a
+  # side effect of compilation, but ICC will put the dependencies in
+  # the current directory while Tru64 will put them in the object
+  # directory.
+  mkdir sub
+
+  am_cv_$1_dependencies_compiler_type=none
+  if test "$am_compiler_list" = ""; then
+     am_compiler_list=`sed -n ['s/^#*\([a-zA-Z0-9]*\))$/\1/p'] < ./depcomp`
+  fi
+  am__universal=false
+  m4_case([$1], [CC],
+    [case " $depcc " in #(
+     *\ -arch\ *\ -arch\ *) am__universal=true ;;
+     esac],
+    [CXX],
+    [case " $depcc " in #(
+     *\ -arch\ *\ -arch\ *) am__universal=true ;;
+     esac])
+
+  for depmode in $am_compiler_list; do
+    # Setup a source with many dependencies, because some compilers
+    # like to wrap large dependency lists on column 80 (with \), and
+    # we should not choose a depcomp mode which is confused by this.
+    #
+    # We need to recreate these files for each test, as the compiler may
+    # overwrite some of them when testing with obscure command lines.
+    # This happens at least with the AIX C compiler.
+    : > sub/conftest.c
+    for i in 1 2 3 4 5 6; do
+      echo '#include "conftst'$i'.h"' >> sub/conftest.c
+      # Using `: > sub/conftst$i.h' creates only sub/conftst1.h with
+      # Solaris 8's {/usr,}/bin/sh.
+      touch sub/conftst$i.h
+    done
+    echo "${am__include} ${am__quote}sub/conftest.Po${am__quote}" > confmf
+
+    # We check with `-c' and `-o' for the sake of the "dashmstdout"
+    # mode.  It turns out that the SunPro C++ compiler does not properly
+    # handle `-M -o', and we need to detect this.  Also, some Intel
+    # versions had trouble with output in subdirs
+    am__obj=sub/conftest.${OBJEXT-o}
+    am__minus_obj="-o $am__obj"
+    case $depmode in
+    gcc)
+      # This depmode causes a compiler race in universal mode.
+      test "$am__universal" = false || continue
+      ;;
+    nosideeffect)
+      # after this tag, mechanisms are not by side-effect, so they'll
+      # only be used when explicitly requested
+      if test "x$enable_dependency_tracking" = xyes; then
+	continue
+      else
+	break
+      fi
+      ;;
+    msvisualcpp | msvcmsys)
+      # This compiler won't grok `-c -o', but also, the minuso test has
+      # not run yet.  These depmodes are late enough in the game, and
+      # so weak that their functioning should not be impacted.
+      am__obj=conftest.${OBJEXT-o}
+      am__minus_obj=
+      ;;
+    none) break ;;
+    esac
+    if depmode=$depmode \
+       source=sub/conftest.c object=$am__obj \
+       depfile=sub/conftest.Po tmpdepfile=sub/conftest.TPo \
+       $SHELL ./depcomp $depcc -c $am__minus_obj sub/conftest.c \
+         >/dev/null 2>conftest.err &&
+       grep sub/conftst1.h sub/conftest.Po > /dev/null 2>&1 &&
+       grep sub/conftst6.h sub/conftest.Po > /dev/null 2>&1 &&
+       grep $am__obj sub/conftest.Po > /dev/null 2>&1 &&
+       ${MAKE-make} -s -f confmf > /dev/null 2>&1; then
+      # icc doesn't choke on unknown options, it will just issue warnings
+      # or remarks (even with -Werror).  So we grep stderr for any message
+      # that says an option was ignored or not supported.
+      # When given -MP, icc 7.0 and 7.1 complain thusly:
+      #   icc: Command line warning: ignoring option '-M'; no argument required
+      # The diagnosis changed in icc 8.0:
+      #   icc: Command line remark: option '-MP' not supported
+      if (grep 'ignoring option' conftest.err ||
+          grep 'not supported' conftest.err) >/dev/null 2>&1; then :; else
+        am_cv_$1_dependencies_compiler_type=$depmode
+        break
+      fi
+    fi
+  done
+
+  cd ..
+  rm -rf conftest.dir
+else
+  am_cv_$1_dependencies_compiler_type=none
+fi
+])
+AC_SUBST([$1DEPMODE], [depmode=$am_cv_$1_dependencies_compiler_type])
+AM_CONDITIONAL([am__fastdep$1], [
+  test "x$enable_dependency_tracking" != xno \
+  && test "$am_cv_$1_dependencies_compiler_type" = gcc3])
+])
+m4trace:/usr/share/aclocal-1.11/depend.m4:163: -1- AC_DEFUN([AM_SET_DEPDIR], [AC_REQUIRE([AM_SET_LEADING_DOT])dnl
+AC_SUBST([DEPDIR], ["${am__leading_dot}deps"])dnl
+])
+m4trace:/usr/share/aclocal-1.11/depend.m4:171: -1- AC_DEFUN([AM_DEP_TRACK], [AC_ARG_ENABLE(dependency-tracking,
+[  --disable-dependency-tracking  speeds up one-time build
+  --enable-dependency-tracking   do not reject slow dependency extractors])
+if test "x$enable_dependency_tracking" != xno; then
+  am_depcomp="$ac_aux_dir/depcomp"
+  AMDEPBACKSLASH='\'
+fi
+AM_CONDITIONAL([AMDEP], [test "x$enable_dependency_tracking" != xno])
+AC_SUBST([AMDEPBACKSLASH])dnl
+_AM_SUBST_NOTMAKE([AMDEPBACKSLASH])dnl
+])
+m4trace:/usr/share/aclocal-1.11/depout.m4:14: -1- AC_DEFUN([_AM_OUTPUT_DEPENDENCY_COMMANDS], [{
+  # Autoconf 2.62 quotes --file arguments for eval, but not when files
+  # are listed without --file.  Let's play safe and only enable the eval
+  # if we detect the quoting.
+  case $CONFIG_FILES in
+  *\'*) eval set x "$CONFIG_FILES" ;;
+  *)   set x $CONFIG_FILES ;;
+  esac
+  shift
+  for mf
+  do
+    # Strip MF so we end up with the name of the file.
+    mf=`echo "$mf" | sed -e 's/:.*$//'`
+    # Check whether this is an Automake generated Makefile or not.
+    # We used to match only the files named `Makefile.in', but
+    # some people rename them; so instead we look at the file content.
+    # Grep'ing the first line is not enough: some people post-process
+    # each Makefile.in and add a new line on top of each file to say so.
+    # Grep'ing the whole file is not good either: AIX grep has a line
+    # limit of 2048, but all sed's we know have understand at least 4000.
+    if sed -n 's,^#.*generated by automake.*,X,p' "$mf" | grep X >/dev/null 2>&1; then
+      dirpart=`AS_DIRNAME("$mf")`
+    else
+      continue
+    fi
+    # Extract the definition of DEPDIR, am__include, and am__quote
+    # from the Makefile without running `make'.
+    DEPDIR=`sed -n 's/^DEPDIR = //p' < "$mf"`
+    test -z "$DEPDIR" && continue
+    am__include=`sed -n 's/^am__include = //p' < "$mf"`
+    test -z "am__include" && continue
+    am__quote=`sed -n 's/^am__quote = //p' < "$mf"`
+    # When using ansi2knr, U may be empty or an underscore; expand it
+    U=`sed -n 's/^U = //p' < "$mf"`
+    # Find all dependency output files, they are included files with
+    # $(DEPDIR) in their names.  We invoke sed twice because it is the
+    # simplest approach to changing $(DEPDIR) to its actual value in the
+    # expansion.
+    for file in `sed -n "
+      s/^$am__include $am__quote\(.*(DEPDIR).*\)$am__quote"'$/\1/p' <"$mf" | \
+	 sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g' -e 's/\$U/'"$U"'/g'`; do
+      # Make sure the directory exists.
+      test -f "$dirpart/$file" && continue
+      fdir=`AS_DIRNAME(["$file"])`
+      AS_MKDIR_P([$dirpart/$fdir])
+      # echo "creating $dirpart/$file"
+      echo '# dummy' > "$dirpart/$file"
+    done
+  done
+}
+])
+m4trace:/usr/share/aclocal-1.11/depout.m4:75: -1- AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS], [AC_CONFIG_COMMANDS([depfiles],
+     [test x"$AMDEP_TRUE" != x"" || _AM_OUTPUT_DEPENDENCY_COMMANDS],
+     [AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"])
+])
+m4trace:/usr/share/aclocal-1.11/header.m4:12: -1- AU_DEFUN([AM_CONFIG_HEADER], [AC_CONFIG_HEADERS($@)])
+m4trace:/usr/share/aclocal-1.11/header.m4:12: -1- AC_DEFUN([AM_CONFIG_HEADER], [AC_DIAGNOSE([obsolete], [The macro `AM_CONFIG_HEADER' is obsolete.
+You should run autoupdate.])dnl
+AC_CONFIG_HEADERS($@)])
+m4trace:/usr/share/aclocal-1.11/init.m4:26: -1- AC_DEFUN([AM_INIT_AUTOMAKE], [AC_PREREQ([2.62])dnl
+dnl Autoconf wants to disallow AM_ names.  We explicitly allow
+dnl the ones we care about.
+m4_pattern_allow([^AM_[A-Z]+FLAGS$])dnl
+AC_REQUIRE([AM_SET_CURRENT_AUTOMAKE_VERSION])dnl
+AC_REQUIRE([AC_PROG_INSTALL])dnl
+if test "`cd $srcdir && pwd`" != "`pwd`"; then
+  # Use -I$(srcdir) only when $(srcdir) != ., so that make's output
+  # is not polluted with repeated "-I."
+  AC_SUBST([am__isrc], [' -I$(srcdir)'])_AM_SUBST_NOTMAKE([am__isrc])dnl
+  # test to see if srcdir already configured
+  if test -f $srcdir/config.status; then
+    AC_MSG_ERROR([source directory already configured; run "make distclean" there first])
+  fi
+fi
+
+# test whether we have cygpath
+if test -z "$CYGPATH_W"; then
+  if (cygpath --version) >/dev/null 2>/dev/null; then
+    CYGPATH_W='cygpath -w'
+  else
+    CYGPATH_W=echo
+  fi
+fi
+AC_SUBST([CYGPATH_W])
+
+# Define the identity of the package.
+dnl Distinguish between old-style and new-style calls.
+m4_ifval([$2],
+[m4_ifval([$3], [_AM_SET_OPTION([no-define])])dnl
+ AC_SUBST([PACKAGE], [$1])dnl
+ AC_SUBST([VERSION], [$2])],
+[_AM_SET_OPTIONS([$1])dnl
+dnl Diagnose old-style AC_INIT with new-style AM_AUTOMAKE_INIT.
+m4_if(m4_ifdef([AC_PACKAGE_NAME], 1)m4_ifdef([AC_PACKAGE_VERSION], 1), 11,,
+  [m4_fatal([AC_INIT should be called with package and version arguments])])dnl
+ AC_SUBST([PACKAGE], ['AC_PACKAGE_TARNAME'])dnl
+ AC_SUBST([VERSION], ['AC_PACKAGE_VERSION'])])dnl
+
+_AM_IF_OPTION([no-define],,
+[AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of package])
+ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Version number of package])])dnl
+
+# Some tools Automake needs.
+AC_REQUIRE([AM_SANITY_CHECK])dnl
+AC_REQUIRE([AC_ARG_PROGRAM])dnl
+AM_MISSING_PROG(ACLOCAL, aclocal-${am__api_version})
+AM_MISSING_PROG(AUTOCONF, autoconf)
+AM_MISSING_PROG(AUTOMAKE, automake-${am__api_version})
+AM_MISSING_PROG(AUTOHEADER, autoheader)
+AM_MISSING_PROG(MAKEINFO, makeinfo)
+AC_REQUIRE([AM_PROG_INSTALL_SH])dnl
+AC_REQUIRE([AM_PROG_INSTALL_STRIP])dnl
+AC_REQUIRE([AM_PROG_MKDIR_P])dnl
+# We need awk for the "check" target.  The system "awk" is bad on
+# some platforms.
+AC_REQUIRE([AC_PROG_AWK])dnl
+AC_REQUIRE([AC_PROG_MAKE_SET])dnl
+AC_REQUIRE([AM_SET_LEADING_DOT])dnl
+_AM_IF_OPTION([tar-ustar], [_AM_PROG_TAR([ustar])],
+	      [_AM_IF_OPTION([tar-pax], [_AM_PROG_TAR([pax])],
+			     [_AM_PROG_TAR([v7])])])
+_AM_IF_OPTION([no-dependencies],,
+[AC_PROVIDE_IFELSE([AC_PROG_CC],
+		  [_AM_DEPENDENCIES(CC)],
+		  [define([AC_PROG_CC],
+			  defn([AC_PROG_CC])[_AM_DEPENDENCIES(CC)])])dnl
+AC_PROVIDE_IFELSE([AC_PROG_CXX],
+		  [_AM_DEPENDENCIES(CXX)],
+		  [define([AC_PROG_CXX],
+			  defn([AC_PROG_CXX])[_AM_DEPENDENCIES(CXX)])])dnl
+AC_PROVIDE_IFELSE([AC_PROG_OBJC],
+		  [_AM_DEPENDENCIES(OBJC)],
+		  [define([AC_PROG_OBJC],
+			  defn([AC_PROG_OBJC])[_AM_DEPENDENCIES(OBJC)])])dnl
+])
+_AM_IF_OPTION([silent-rules], [AC_REQUIRE([AM_SILENT_RULES])])dnl
+dnl The `parallel-tests' driver may need to know about EXEEXT, so add the
+dnl `am__EXEEXT' conditional if _AM_COMPILER_EXEEXT was seen.  This macro
+dnl is hooked onto _AC_COMPILER_EXEEXT early, see below.
+AC_CONFIG_COMMANDS_PRE(dnl
+[m4_provide_if([_AM_COMPILER_EXEEXT],
+  [AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])])])dnl
+])
+m4trace:/usr/share/aclocal-1.11/init.m4:126: -1- AC_DEFUN([_AC_AM_CONFIG_HEADER_HOOK], [# Compute $1's index in $config_headers.
+_am_arg=$1
+_am_stamp_count=1
+for _am_header in $config_headers :; do
+  case $_am_header in
+    $_am_arg | $_am_arg:* )
+      break ;;
+    * )
+      _am_stamp_count=`expr $_am_stamp_count + 1` ;;
+  esac
+done
+echo "timestamp for $_am_arg" >`AS_DIRNAME(["$_am_arg"])`/stamp-h[]$_am_stamp_count])
+m4trace:/usr/share/aclocal-1.11/install-sh.m4:11: -1- AC_DEFUN([AM_PROG_INSTALL_SH], [AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
+if test x"${install_sh}" != xset; then
+  case $am_aux_dir in
+  *\ * | *\	*)
+    install_sh="\${SHELL} '$am_aux_dir/install-sh'" ;;
+  *)
+    install_sh="\${SHELL} $am_aux_dir/install-sh"
+  esac
+fi
+AC_SUBST(install_sh)])
+m4trace:/usr/share/aclocal-1.11/lead-dot.m4:12: -1- AC_DEFUN([AM_SET_LEADING_DOT], [rm -rf .tst 2>/dev/null
+mkdir .tst 2>/dev/null
+if test -d .tst; then
+  am__leading_dot=.
+else
+  am__leading_dot=_
+fi
+rmdir .tst 2>/dev/null
+AC_SUBST([am__leading_dot])])
+m4trace:/usr/share/aclocal-1.11/make.m4:14: -1- AC_DEFUN([AM_MAKE_INCLUDE], [am_make=${MAKE-make}
+cat > confinc << 'END'
+am__doit:
+	@echo this is the am__doit target
+.PHONY: am__doit
+END
+# If we don't find an include directive, just comment out the code.
+AC_MSG_CHECKING([for style of include used by $am_make])
+am__include="#"
+am__quote=
+_am_result=none
+# First try GNU make style include.
+echo "include confinc" > confmf
+# Ignore all kinds of additional output from `make'.
+case `$am_make -s -f confmf 2> /dev/null` in #(
+*the\ am__doit\ target*)
+  am__include=include
+  am__quote=
+  _am_result=GNU
+  ;;
+esac
+# Now try BSD make style include.
+if test "$am__include" = "#"; then
+   echo '.include "confinc"' > confmf
+   case `$am_make -s -f confmf 2> /dev/null` in #(
+   *the\ am__doit\ target*)
+     am__include=.include
+     am__quote="\""
+     _am_result=BSD
+     ;;
+   esac
+fi
+AC_SUBST([am__include])
+AC_SUBST([am__quote])
+AC_MSG_RESULT([$_am_result])
+rm -f confinc confmf
+])
+m4trace:/usr/share/aclocal-1.11/minuso.m4:14: -1- AC_DEFUN([AM_PROG_CC_C_O], [AC_REQUIRE([AC_PROG_CC_C_O])dnl
+AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
+AC_REQUIRE_AUX_FILE([compile])dnl
+# FIXME: we rely on the cache variable name because
+# there is no other way.
+set dummy $CC
+am_cc=`echo $[2] | sed ['s/[^a-zA-Z0-9_]/_/g;s/^[0-9]/_/']`
+eval am_t=\$ac_cv_prog_cc_${am_cc}_c_o
+if test "$am_t" != yes; then
+   # Losing compiler, so override with the script.
+   # FIXME: It is wrong to rewrite CC.
+   # But if we don't then we get into trouble of one sort or another.
+   # A longer-term fix would be to have automake use am__CC in this case,
+   # and then we could set am__CC="\$(top_srcdir)/compile \$(CC)"
+   CC="$am_aux_dir/compile $CC"
+fi
+dnl Make sure AC_PROG_CC is never called again, or it will override our
+dnl setting of CC.
+m4_define([AC_PROG_CC],
+          [m4_fatal([AC_PROG_CC cannot be called after AM_PROG_CC_C_O])])
+])
+m4trace:/usr/share/aclocal-1.11/missing.m4:14: -1- AC_DEFUN([AM_MISSING_PROG], [AC_REQUIRE([AM_MISSING_HAS_RUN])
+$1=${$1-"${am_missing_run}$2"}
+AC_SUBST($1)])
+m4trace:/usr/share/aclocal-1.11/missing.m4:24: -1- AC_DEFUN([AM_MISSING_HAS_RUN], [AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
+AC_REQUIRE_AUX_FILE([missing])dnl
+if test x"${MISSING+set}" != xset; then
+  case $am_aux_dir in
+  *\ * | *\	*)
+    MISSING="\${SHELL} \"$am_aux_dir/missing\"" ;;
+  *)
+    MISSING="\${SHELL} $am_aux_dir/missing" ;;
+  esac
+fi
+# Use eval to expand $SHELL
+if eval "$MISSING --run true"; then
+  am_missing_run="$MISSING --run "
+else
+  am_missing_run=
+  AC_MSG_WARN([`missing' script is too old or missing])
+fi
+])
+m4trace:/usr/share/aclocal-1.11/mkdirp.m4:11: -1- AC_DEFUN([AM_PROG_MKDIR_P], [AC_PREREQ([2.60])dnl
+AC_REQUIRE([AC_PROG_MKDIR_P])dnl
+dnl Automake 1.8 to 1.9.6 used to define mkdir_p.  We now use MKDIR_P,
+dnl while keeping a definition of mkdir_p for backward compatibility.
+dnl @MKDIR_P@ is magic: AC_OUTPUT adjusts its value for each Makefile.
+dnl However we cannot define mkdir_p as $(MKDIR_P) for the sake of
+dnl Makefile.ins that do not define MKDIR_P, so we do our own
+dnl adjustment using top_builddir (which is defined more often than
+dnl MKDIR_P).
+AC_SUBST([mkdir_p], ["$MKDIR_P"])dnl
+case $mkdir_p in
+  [[\\/$]]* | ?:[[\\/]]*) ;;
+  */*) mkdir_p="\$(top_builddir)/$mkdir_p" ;;
+esac
+])
+m4trace:/usr/share/aclocal-1.11/options.m4:13: -1- AC_DEFUN([_AM_MANGLE_OPTION], [[_AM_OPTION_]m4_bpatsubst($1, [[^a-zA-Z0-9_]], [_])])
+m4trace:/usr/share/aclocal-1.11/options.m4:19: -1- AC_DEFUN([_AM_SET_OPTION], [m4_define(_AM_MANGLE_OPTION([$1]), 1)])
+m4trace:/usr/share/aclocal-1.11/options.m4:25: -1- AC_DEFUN([_AM_SET_OPTIONS], [m4_foreach_w([_AM_Option], [$1], [_AM_SET_OPTION(_AM_Option)])])
+m4trace:/usr/share/aclocal-1.11/options.m4:31: -1- AC_DEFUN([_AM_IF_OPTION], [m4_ifset(_AM_MANGLE_OPTION([$1]), [$2], [$3])])
+m4trace:/usr/share/aclocal-1.11/runlog.m4:12: -1- AC_DEFUN([AM_RUN_LOG], [{ echo "$as_me:$LINENO: $1" >&AS_MESSAGE_LOG_FD
+   ($1) >&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
+   ac_status=$?
+   echo "$as_me:$LINENO: \$? = $ac_status" >&AS_MESSAGE_LOG_FD
+   (exit $ac_status); }])
+m4trace:/usr/share/aclocal-1.11/sanity.m4:14: -1- AC_DEFUN([AM_SANITY_CHECK], [AC_MSG_CHECKING([whether build environment is sane])
+# Just in case
+sleep 1
+echo timestamp > conftest.file
+# Reject unsafe characters in $srcdir or the absolute working directory
+# name.  Accept space and tab only in the latter.
+am_lf='
+'
+case `pwd` in
+  *[[\\\"\#\$\&\'\`$am_lf]]*)
+    AC_MSG_ERROR([unsafe absolute working directory name]);;
+esac
+case $srcdir in
+  *[[\\\"\#\$\&\'\`$am_lf\ \	]]*)
+    AC_MSG_ERROR([unsafe srcdir value: `$srcdir']);;
+esac
+
+# Do `set' in a subshell so we don't clobber the current shell's
+# arguments.  Must try -L first in case configure is actually a
+# symlink; some systems play weird games with the mod time of symlinks
+# (eg FreeBSD returns the mod time of the symlink's containing
+# directory).
+if (
+   set X `ls -Lt "$srcdir/configure" conftest.file 2> /dev/null`
+   if test "$[*]" = "X"; then
+      # -L didn't work.
+      set X `ls -t "$srcdir/configure" conftest.file`
+   fi
+   rm -f conftest.file
+   if test "$[*]" != "X $srcdir/configure conftest.file" \
+      && test "$[*]" != "X conftest.file $srcdir/configure"; then
+
+      # If neither matched, then we have a broken ls.  This can happen
+      # if, for instance, CONFIG_SHELL is bash and it inherits a
+      # broken ls alias from the environment.  This has actually
+      # happened.  Such a system could not be considered "sane".
+      AC_MSG_ERROR([ls -t appears to fail.  Make sure there is not a broken
+alias in your environment])
+   fi
+
+   test "$[2]" = conftest.file
+   )
+then
+   # Ok.
+   :
+else
+   AC_MSG_ERROR([newly created file is older than distributed files!
+Check your system clock])
+fi
+AC_MSG_RESULT(yes)])
+m4trace:/usr/share/aclocal-1.11/silent.m4:14: -1- AC_DEFUN([AM_SILENT_RULES], [AC_ARG_ENABLE([silent-rules],
+[  --enable-silent-rules          less verbose build output (undo: `make V=1')
+  --disable-silent-rules         verbose build output (undo: `make V=0')])
+case $enable_silent_rules in
+yes) AM_DEFAULT_VERBOSITY=0;;
+no)  AM_DEFAULT_VERBOSITY=1;;
+*)   AM_DEFAULT_VERBOSITY=m4_if([$1], [yes], [0], [1]);;
+esac
+AC_SUBST([AM_DEFAULT_VERBOSITY])dnl
+AM_BACKSLASH='\'
+AC_SUBST([AM_BACKSLASH])dnl
+_AM_SUBST_NOTMAKE([AM_BACKSLASH])dnl
+])
+m4trace:/usr/share/aclocal-1.11/strip.m4:17: -1- AC_DEFUN([AM_PROG_INSTALL_STRIP], [AC_REQUIRE([AM_PROG_INSTALL_SH])dnl
+# Installed binaries are usually stripped using `strip' when the user
+# run `make install-strip'.  However `strip' might not be the right
+# tool to use in cross-compilation environments, therefore Automake
+# will honor the `STRIP' environment variable to overrule this program.
+dnl Don't test for $cross_compiling = yes, because it might be `maybe'.
+if test "$cross_compiling" != no; then
+  AC_CHECK_TOOL([STRIP], [strip], :)
+fi
+INSTALL_STRIP_PROGRAM="\$(install_sh) -c -s"
+AC_SUBST([INSTALL_STRIP_PROGRAM])])
+m4trace:/usr/share/aclocal-1.11/substnot.m4:14: -1- AC_DEFUN([_AM_SUBST_NOTMAKE])
+m4trace:/usr/share/aclocal-1.11/substnot.m4:19: -1- AC_DEFUN([AM_SUBST_NOTMAKE], [_AM_SUBST_NOTMAKE($@)])
+m4trace:/usr/share/aclocal-1.11/tar.m4:24: -1- AC_DEFUN([_AM_PROG_TAR], [# Always define AMTAR for backward compatibility.
+AM_MISSING_PROG([AMTAR], [tar])
+m4_if([$1], [v7],
+     [am__tar='${AMTAR} chof - "$$tardir"'; am__untar='${AMTAR} xf -'],
+     [m4_case([$1], [ustar],, [pax],,
+              [m4_fatal([Unknown tar format])])
+AC_MSG_CHECKING([how to create a $1 tar archive])
+# Loop over all known methods to create a tar archive until one works.
+_am_tools='gnutar m4_if([$1], [ustar], [plaintar]) pax cpio none'
+_am_tools=${am_cv_prog_tar_$1-$_am_tools}
+# Do not fold the above two line into one, because Tru64 sh and
+# Solaris sh will not grok spaces in the rhs of `-'.
+for _am_tool in $_am_tools
+do
+  case $_am_tool in
+  gnutar)
+    for _am_tar in tar gnutar gtar;
+    do
+      AM_RUN_LOG([$_am_tar --version]) && break
+    done
+    am__tar="$_am_tar --format=m4_if([$1], [pax], [posix], [$1]) -chf - "'"$$tardir"'
+    am__tar_="$_am_tar --format=m4_if([$1], [pax], [posix], [$1]) -chf - "'"$tardir"'
+    am__untar="$_am_tar -xf -"
+    ;;
+  plaintar)
+    # Must skip GNU tar: if it does not support --format= it doesn't create
+    # ustar tarball either.
+    (tar --version) >/dev/null 2>&1 && continue
+    am__tar='tar chf - "$$tardir"'
+    am__tar_='tar chf - "$tardir"'
+    am__untar='tar xf -'
+    ;;
+  pax)
+    am__tar='pax -L -x $1 -w "$$tardir"'
+    am__tar_='pax -L -x $1 -w "$tardir"'
+    am__untar='pax -r'
+    ;;
+  cpio)
+    am__tar='find "$$tardir" -print | cpio -o -H $1 -L'
+    am__tar_='find "$tardir" -print | cpio -o -H $1 -L'
+    am__untar='cpio -i -H $1 -d'
+    ;;
+  none)
+    am__tar=false
+    am__tar_=false
+    am__untar=false
+    ;;
+  esac
+
+  # If the value was cached, stop now.  We just wanted to have am__tar
+  # and am__untar set.
+  test -n "${am_cv_prog_tar_$1}" && break
+
+  # tar/untar a dummy directory, and stop if the command works
+  rm -rf conftest.dir
+  mkdir conftest.dir
+  echo GrepMe > conftest.dir/file
+  AM_RUN_LOG([tardir=conftest.dir && eval $am__tar_ >conftest.tar])
+  rm -rf conftest.dir
+  if test -s conftest.tar; then
+    AM_RUN_LOG([$am__untar <conftest.tar])
+    grep GrepMe conftest.dir/file >/dev/null 2>&1 && break
+  fi
+done
+rm -rf conftest.dir
+
+AC_CACHE_VAL([am_cv_prog_tar_$1], [am_cv_prog_tar_$1=$_am_tool])
+AC_MSG_RESULT([$am_cv_prog_tar_$1])])
+AC_SUBST([am__tar])
+AC_SUBST([am__untar])
+])
+m4trace:m4/ax_lib_ibm_db2.m4:1: -1- AC_DEFUN([AX_LIB_IBM_DB2], [
+    AC_ARG_WITH([ibm-db2],
+        AC_HELP_STRING([--with-ibm-db2=@<:@ARG@:>@],
+            [use IBM DB2 CLI from given sqllib directory (ARG=path); use /home/db2inst1/sqllib (ARG=yes); disable IBM DB2 support (ARG=no)]
+        ),
+        [
+        if test "$withval" != "no"; then
+            want_ibm_db2="yes"
+            if test "$withval" != "yes"; then
+                ibm_db2_include_dir="$withval/include"
+                ibm_db2_lib_dir="$withval/lib"
+            else
+                ibm_db2_include_dir=/home/db2inst1/sqllib/include
+                ibm_db2_lib_dir=/home/db2inst1/sqllib/lib
+            fi
+        fi
+        ]
+    )
+    AC_ARG_WITH([ibm-db2-include],
+        AC_HELP_STRING([--with-ibm-db2-include=@<:@DIR@:>@],
+            [use IBM DB2 CLI headers from given path]
+        ),
+        [
+        if test "$withval" != "no"; then
+            want_ibm_db2="yes"
+            ibm_db2_include_dir="$withval"
+        fi
+        ]
+    )
+    AC_ARG_WITH([ibm-db2-lib],
+        AC_HELP_STRING([--with-ibm-db2-lib=@<:@DIR@:>@],
+            [use IBM DB2 CLI libraries from given path]
+        ),
+        [
+        if test "$withval" != "no"; then
+            want_ibm_db2="yes"
+            ibm_db2_lib_dir="$withval"
+        fi
+        ]
+    )
+
+    if test "x$want_ibm_db2" = "xyes"; then
+        IBM_DB2_CPPFLAGS="-I$ibm_db2_include_dir"
+        IBM_DB2_LDFLAGS="-L$ibm_db2_lib_dir"
+        IBM_DB2_LIBS="-ldb2"
+
+        saved_CPPFLAGS="$CPPFLAGS"
+        CPPFLAGS="$CPPFLAGS $IBM_DB2_CPPFLAGS $IBM_DB2_LDFLAGS $IBM_DB2_LIBS"
+
+        AC_MSG_CHECKING([for IBM DB2 CLI libraries])
+        AC_TRY_LINK([#include <sqlcli1.h>],
+                [SQLHANDLE hdbc;
+                SQLRETURN sqlr;
+                sqlr = SQLDriverConnect(hdbc, 0, "", SQL_NTS, 0, 0, 0, SQL_DRIVER_NOPROMPT);
+                ],
+                AC_DEFINE(HAVE_IBM_DB2, [1], [Define to 1 if IBM DB2 CLI libraries are available])
+                found_ibm_db2="yes"
+                AC_MSG_RESULT(yes),
+                AC_MSG_RESULT(no))
+
+        CPPFLAGS="$saved_CPPFLAGS"
+    fi
+])
+m4trace:m4/ax_lib_mysql.m4:49: -1- AC_DEFUN([AX_LIB_MYSQL], [
+    MYSQL_CONFIG="no"
+
+    AC_ARG_WITH([mysql],
+        AC_HELP_STRING([--with-mysql@<:@=ARG@:>@],
+            [use MySQL client library @<:@default=no@:>@, optionally specify path to mysql_config]
+        ),
+        [
+        if test "$withval" = "no"; then
+            want_mysql="no"
+        elif test "$withval" = "yes"; then
+            want_mysql="yes"
+        else
+            want_mysql="yes"
+            MYSQL_CONFIG="$withval"
+        fi
+        ],
+        [want_mysql="no"]
+    )
+
+    MYSQL_CFLAGS=""
+    MYSQL_LDFLAGS=""
+    MYSQL_LIBS=""
+    MYSQL_VERSION=""
+
+    dnl
+    dnl Check MySQL libraries
+    dnl
+
+    if test "$want_mysql" = "yes"; then
+
+        AC_PATH_PROG([MYSQL_CONFIG], [mysql_config], [])
+
+        if test -x "$MYSQL_CONFIG"; then
+
+            MYSQL_CFLAGS="`$MYSQL_CONFIG --cflags`"
+
+            _full_libmysql_libs="`$MYSQL_CONFIG --libs`"
+
+            for i in $_full_libmysql_libs; do
+                case $i in
+                -lmysqlclient)
+             ;;
+                   -L*)
+                        MYSQL_LDFLAGS="${MYSQL_LDFLAGS} $i"
+                ;;
+                esac
+            done
+
+            if test "x$enable_static" = "xyes"; then
+               for i in $_full_libmysql_libs; do
+                   case $i in
+           	      -lmysqlclient)
+           	    ;;
+                      -l*)
+				_lib_name="`echo "$i" | cut -b3-`"
+				AC_CHECK_LIB($_lib_name, main, [
+						MYSQL_LIBS="$MYSQL_LIBS $i"
+					],[
+						AC_MSG_ERROR([Not found $_lib_name library])
+					])
+                   ;;
+                   esac
+               done
+            fi
+
+		_save_mysql_libs="${LIBS}"
+		_save_mysql_ldflags="${LDFLAGS}"
+		_save_mysql_cflags="${CFLAGS}"
+		LIBS="${LIBS} ${MYSQL_LIBS}"
+		LDFLAGS="${LDFLAGS} ${MYSQL_LDFLAGS}"
+		CFLAGS="${CFLAGS} ${MYSQL_CFLAGS}"
+
+		AC_CHECK_LIB(mysqlclient, main, [
+			MYSQL_LIBS="-lmysqlclient ${MYSQL_LIBS}"
+			],[
+			AC_MSG_ERROR([Not found mysqlclient library])
+			])
+
+		LIBS="${_save_mysql_libs}"
+		LDFLAGS="${_save_mysql_ldflags}"
+		CFLAGS="${_save_mysql_cflags}"
+		unset _save_mysql_libs
+		unset _save_mysql_ldflags
+		unset _save_mysql_cflags
+
+		MYSQL_VERSION=`$MYSQL_CONFIG --version`
+
+		AC_DEFINE([HAVE_MYSQL], [1],
+			[Define to 1 if MySQL libraries are available])
+
+            found_mysql="yes"
+        else
+            found_mysql="no"
+        fi
+    fi
+
+    dnl
+    dnl Check if required version of MySQL is available
+    dnl
+
+    mysql_version_req=ifelse([$1], [], [], [$1])
+
+    if test "$found_mysql" = "yes" -a -n "$mysql_version_req"; then
+
+        AC_MSG_CHECKING([if MySQL version is >= $mysql_version_req])
+
+        dnl Decompose required version string of MySQL
+        dnl and calculate its number representation
+        mysql_version_req_major=`expr $mysql_version_req : '\([[0-9]]*\)'`
+        mysql_version_req_minor=`expr $mysql_version_req : '[[0-9]]*\.\([[0-9]]*\)'`
+        mysql_version_req_micro=`expr $mysql_version_req : '[[0-9]]*\.[[0-9]]*\.\([[0-9]]*\)'`
+        if test "x$mysql_version_req_micro" = "x"; then
+            mysql_version_req_micro="0"
+        fi
+
+        mysql_version_req_number=`expr $mysql_version_req_major \* 1000000 \
+                                   \+ $mysql_version_req_minor \* 1000 \
+                                   \+ $mysql_version_req_micro`
+
+        dnl Decompose version string of installed MySQL
+        dnl and calculate its number representation
+        mysql_version_major=`expr $MYSQL_VERSION : '\([[0-9]]*\)'`
+        mysql_version_minor=`expr $MYSQL_VERSION : '[[0-9]]*\.\([[0-9]]*\)'`
+        mysql_version_micro=`expr $MYSQL_VERSION : '[[0-9]]*\.[[0-9]]*\.\([[0-9]]*\)'`
+        if test "x$mysql_version_micro" = "x"; then
+            mysql_version_micro="0"
+        fi
+
+        mysql_version_number=`expr $mysql_version_major \* 1000000 \
+                                   \+ $mysql_version_minor \* 1000 \
+                                   \+ $mysql_version_micro`
+
+        mysql_version_check=`expr $mysql_version_number \>\= $mysql_version_req_number`
+        if test "$mysql_version_check" = "1"; then
+            AC_MSG_RESULT([yes])
+        else
+            AC_MSG_RESULT([no])
+        fi
+    fi
+
+    AC_SUBST([MYSQL_VERSION])
+    AC_SUBST([MYSQL_CFLAGS])
+    AC_SUBST([MYSQL_LDFLAGS])
+    AC_SUBST([MYSQL_LIBS])
+])
+m4trace:m4/ax_lib_oracle_oci.m4:55: -1- AC_DEFUN([AX_LIB_ORACLE_OCI], [
+    AC_ARG_WITH([oracle],
+        AC_HELP_STRING([--with-oracle=@<:@ARG@:>@],
+            [use Oracle OCI API from given Oracle home (ARG=path); use existing ORACLE_HOME (ARG=yes); disable Oracle OCI support (ARG=no)]
+        ),
+        [
+        if test "$withval" = "no"; then
+            WANT_ORACLE_OCI="no"
+        elif test "$withval" = "yes"; then
+            WANT_ORACLE_OCI="yes"
+            oracle_home_dir="$ORACLE_HOME"
+        elif test -d "$withval"; then
+            WANT_ORACLE_OCI="yes"
+            oracle_home_dir="$withval"
+        else
+            WANT_ORACLE_OCI="yes"
+            oracle_home_dir=""
+        fi
+        ],
+        [WANT_ORACLE_OCI="no"]
+    )
+
+    AC_ARG_WITH([oracle-include],
+        AC_HELP_STRING([--with-oracle-include=@<:@DIR@:>@],
+            [use Oracle OCI API headers from given path]
+        ),
+        [
+        if test "$withval" != "no"; then
+            WANT_ORACLE_OCI="yes"
+            oracle_home_include_dir="$withval"
+        fi
+        ],
+        [oracle_home_include_dir=""]
+    )
+    AC_ARG_WITH([oracle-lib],
+        AC_HELP_STRING([--with-oracle-lib=@<:@DIR@:>@],
+            [use Oracle OCI API libraries from given path]
+        ),
+        [
+        if test "$withval" != "no"; then
+            WANT_ORACLE_OCI="yes"
+            oracle_home_lib_dir="$withval"
+        fi
+        ],
+        [oracle_home_lib_dir=""]
+    )
+
+    ORACLE_OCI_CFLAGS=""
+    ORACLE_OCI_LDFLAGS=""
+    ORACLE_OCI_LIBS=""
+    ORACLE_OCI_VERSION=""
+
+    dnl
+    dnl Collect include/lib paths
+    dnl
+    want_oracle_but_no_path="no"
+
+    if test -n "$oracle_home_dir"; then
+
+        if test "$oracle_home_dir" != "no" -a "$oracle_home_dir" != "yes"; then
+            dnl ORACLE_HOME path provided
+
+            dnl Primary path to OCI headers, available in Oracle>=10
+            oracle_include_dir="$oracle_home_dir/rdbms/public"
+
+            dnl Secondary path to OCI headers used by older versions
+            oracle_include_dir2="$oracle_home_dir/rdbms/demo"
+
+            dnl Library path
+            oracle_lib_dir="$oracle_home_dir/lib"
+        elif test "$oracle_home_dir" = "yes"; then
+            want_oracle_but_no_path="yes"
+        fi
+
+    elif test -n "$oracle_home_include_dir" -o -n "$oracle_home_lib_dir"; then
+
+        if test "$oracle_home_include_dir" != "no" -a "$oracle_home_include_dir" != "yes"; then
+            oracle_include_dir="$oracle_home_include_dir"
+        elif test "$oracle_home_include_dir" = "yes"; then
+            want_oracle_but_no_path="yes"
+        fi
+
+        if test "$oracle_home_lib_dir" != "no" -a "$oracle_home_lib_dir" != "yes"; then
+            oracle_lib_dir="$oracle_home_lib_dir"
+        elif test "$oracle_home_lib_dir" = "yes"; then
+            want_oracle_but_no_path="yes"
+        fi
+    fi
+
+    if test "$want_oracle_but_no_path" = "yes"; then
+        AC_MSG_WARN([Oracle support is requested but no Oracle paths have been provided. \
+Please, locate Oracle directories using --with-oracle or \
+--with-oracle-include and --with-oracle-lib options.])
+    fi
+
+    dnl
+    dnl Check OCI files
+    dnl
+    if test -n "$oracle_include_dir" -a -n "$oracle_lib_dir"; then
+
+        saved_CPPFLAGS="$CPPFLAGS"
+        CPPFLAGS="$CPPFLAGS -I$oracle_include_dir"
+
+        dnl Additional path for older Oracle installations
+        if test -n "$oracle_include_dir2"; then
+            CPPFLAGS="$CPPFLAGS -I$oracle_include_dir2"
+        fi
+
+        dnl Depending on later Oracle version detection,
+        dnl -lnnz10 flag might be removed for older Oracle < 10.x
+        saved_LDFLAGS="$LDFLAGS"
+        oci_ldflags="-L$oracle_lib_dir"
+        LDFLAGS="$LDFLAGS $oci_ldflags"
+
+        saved_LIBS="$LIBS"
+        oci_libs="-lclntsh"
+        LIBS="$LIBS $oci_libs"
+
+        dnl
+        dnl Check OCI headers
+        dnl
+        AC_MSG_CHECKING([for Oracle OCI headers in $oracle_include_dir])
+
+        AC_COMPILE_IFELSE([
+            AC_LANG_PROGRAM([[@%:@include <oci.h>]],
+                [[
+#if defined(OCI_MAJOR_VERSION)
+#if OCI_MAJOR_VERSION == 10 && OCI_MINOR_VERSION == 2
+// Oracle 10.2 detected
+#endif
+#elif defined(OCI_V7_SYNTAX)
+// OK, older Oracle detected
+// TODO - mloskot: find better macro to check for older versions;
+#else
+#  error Oracle oci.h header not found
+#endif
+                ]]
+            )],
+            [
+            ORACLE_OCI_CFLAGS="-I$oracle_include_dir"
+
+            if test -n "$oracle_include_dir2"; then
+                ORACLE_OCI_CFLAGS="$ORACLE_OCI_CFLAGS -I$oracle_include_dir2"
+            fi
+
+            oci_header_found="yes"
+            AC_MSG_RESULT([yes])
+            ],
+            [
+            oci_header_found="no"
+            AC_MSG_RESULT([not found])
+            ]
+        )
+
+        dnl
+        dnl Check required version of Oracle is available
+        dnl
+        oracle_version_req=ifelse([$1], [], [], [$1])
+
+        if test "$oci_header_found" = "yes"; then
+
+            oracle_version_major=`cat $oracle_include_dir/oci.h \
+                                 | grep '#define.*OCI_MAJOR_VERSION.*' \
+                                 | sed -e 's/#define OCI_MAJOR_VERSION  *//' \
+                                 | sed -e 's/  *\/\*.*\*\///'`
+
+            oracle_version_minor=`cat $oracle_include_dir/oci.h \
+                                 | grep '#define.*OCI_MINOR_VERSION.*' \
+                                 | sed -e 's/#define OCI_MINOR_VERSION  *//' \
+                                 | sed -e 's/  *\/\*.*\*\///'`
+
+            dnl Calculate its number representation
+            oracle_version_number=`expr $oracle_version_major \* 1000000 \
+                                  \+ $oracle_version_minor \* 1000`
+
+
+            if test -n "$oracle_version_req"; then
+                AC_MSG_CHECKING([if Oracle OCI version is >= $oracle_version_req])
+
+                if test -n "$oracle_version_major" -a -n $"oracle_version_minor"; then
+
+                    ORACLE_OCI_VERSION="$oracle_version_major.$oracle_version_minor"
+
+                    dnl Decompose required version string of Oracle
+                    dnl and calculate its number representation
+                    oracle_version_req_major=`expr $oracle_version_req : '\([[0-9]]*\)'`
+                    oracle_version_req_minor=`expr $oracle_version_req : '[[0-9]]*\.\([[0-9]]*\)'`
+
+                    oracle_version_req_number=`expr $oracle_version_req_major \* 1000000 \
+                                               \+ $oracle_version_req_minor \* 1000`
+
+                    oracle_version_check=`expr $oracle_version_number \>\= $oracle_version_req_number`
+                    if test "$oracle_version_check" = "1"; then
+
+                        oracle_version_checked="yes"
+                        AC_MSG_RESULT([yes])
+
+                    else
+                        oracle_version_checked="no"
+                        AC_MSG_RESULT([no])
+                        AC_MSG_ERROR([Oracle $ORACLE_OCI_VERSION found, but required version is $oracle_version_req])
+                    fi
+                else
+                    ORACLE_OCI_VERSION="UNKNOWN"
+                    AC_MSG_RESULT([no])
+                    AC_MSG_WARN([Oracle version unknown, probably OCI older than 10.2 is available])
+                fi
+            fi
+
+            dnl Add -lnnz1x flag to Oracle >= 10.x
+            AC_MSG_CHECKING([for Oracle OCI version >= 10.x to use -lnnz1x flag])
+            oracle_nnz1x_flag=`expr $oracle_version_number / 1000000`
+            if test "$oracle_nnz1x_flag" -ge 10; then
+                oci_libs="$oci_libs -lnnz$oracle_nnz1x_flag"
+                LIBS="$LIBS -lnnz$oracle_nnz1x_flag"
+                AC_MSG_RESULT([-lnnz$oracle_nnz1x_flag])
+            else
+                AC_MSG_RESULT([no])
+            fi
+        fi
+
+        dnl
+        dnl Check OCI libraries
+        dnl
+        if test "$oci_header_found" = "yes"; then
+
+            AC_MSG_CHECKING([for Oracle OCI libraries in $oracle_lib_dir])
+
+            AC_LINK_IFELSE([
+                AC_LANG_PROGRAM([[@%:@include <oci.h>]],
+                    [[
+OCIEnv* envh = 0;
+OCIEnvCreate(&envh, OCI_DEFAULT, 0, 0, 0, 0, 0, 0);
+if (envh) OCIHandleFree(envh, OCI_HTYPE_ENV);
+                    ]]
+                )],
+                [
+                ORACLE_OCI_LDFLAGS="$oci_ldflags"
+                ORACLE_OCI_LIBS="$oci_libs"
+                oci_lib_found="yes"
+                AC_MSG_RESULT([yes])
+                ],
+                [
+                oci_lib_found="no"
+                AC_MSG_RESULT([not found])
+                ]
+            )
+        fi
+
+        CPPFLAGS="$saved_CPPFLAGS"
+        LDFLAGS="$saved_LDFLAGS"
+        LIBS="$saved_LIBS"
+    fi
+
+    AC_MSG_CHECKING([for Oracle support])
+
+    if test "$oci_header_found" = "yes" -a "$oci_lib_found" = "yes"; then
+
+        AC_SUBST([ORACLE_OCI_VERSION])
+        AC_SUBST([ORACLE_OCI_CFLAGS])
+        AC_SUBST([ORACLE_OCI_LDFLAGS])
+        AC_SUBST([ORACLE_OCI_LIBS])
+
+        HAVE_ORACLE_OCI="yes"
+    else
+        HAVE_ORACLE_OCI="no"
+    fi
+
+    AC_MSG_RESULT([$HAVE_ORACLE_OCI])
+])
+m4trace:m4/ax_lib_postgresql.m4:49: -1- AC_DEFUN([AX_LIB_POSTGRESQL], [
+    PG_CONFIG="no"
+
+    AC_ARG_WITH([postgresql],
+        AC_HELP_STRING([--with-postgresql@<:@=ARG@:>@],
+            [use PostgreSQL library @<:@default=no@:>@, optionally specify path to pg_config]
+        ),
+        [
+        if test "x$withval" = "xno"; then
+            want_postgresql="no"
+        elif test "x$withval" = "xyes"; then
+            want_postgresql="yes"
+        else
+            want_postgresql="yes"
+            PG_CONFIG="$withval"
+        fi
+        ],
+        [want_postgresql="no"]
+    )
+
+    POSTGRESQL_CFLAGS=""
+    POSTGRESQL_LDFLAGS=""
+    POSTGRESQL_LIBS=""
+    POSTGRESQL_VERSION=""
+
+    dnl
+    dnl Check PostgreSQL libraries (libpq)
+    dnl
+
+    if test "x$want_postgresql" = "xyes"; then
+        AC_PATH_PROG([PG_CONFIG], [pg_config], [])
+
+        if test -x "$PG_CONFIG"; then
+            POSTGRESQL_CFLAGS="`$PG_CONFIG --includedir`"
+            if test -n "$POSTGRESQL_CFLAGS"; then
+                POSTGRESQL_CFLAGS="-I$POSTGRESQL_CFLAGS";
+            fi
+            POSTGRESQL_LDFLAGS="`$PG_CONFIG --libdir`"
+            if test -n "$POSTGRESQL_LDFLAGS"; then
+                POSTGRESQL_LDFLAGS="-L$POSTGRESQL_LDFLAGS";
+            fi
+            POSTGRESQL_LIBS="-lpq"
+
+            _save_postgresql_cflags="${CFLAGS}"
+            _save_postgresql_ldflags="${LDFLAGS}"
+            _save_postgresql_libs="${LIBS}"
+            CFLAGS="${CFLAGS} ${POSTGRESQL_CFLAGS}"
+            LDFLAGS="${LDFLAGS} ${POSTGRESQL_LDFLAGS}"
+            LIBS="${LIBS} ${POSTGRESQL_LIBS}"
+
+            AC_MSG_CHECKING([for PostgreSQL libraries])
+            AC_TRY_LINK(
+[
+#include <libpq-fe.h>
+],
+[
+PGconn	*conn;
+conn = PQsetdbLogin(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+],
+            AC_DEFINE([HAVE_POSTGRESQL], [1], [Define to 1 if PostgreSQL libraries are available])
+            found_postgresql="yes"
+            AC_MSG_RESULT(yes),
+            AC_MSG_RESULT(no))
+
+            CFLAGS="${_save_postgresql_cflags}"
+            LDFLAGS="${_save_postgresql_ldflags}"
+            LIBS="${_save_postgresql_libs}"
+            unset _save_postgresql_cflags
+            unset _save_postgresql_ldflags
+            unset _save_postgresql_libs
+
+            if test "x$found_postgresql" = "xyes"; then
+                POSTGRESQL_VERSION=`$PG_CONFIG --version | sed -e 's#PostgreSQL ##'`
+            fi
+        fi
+    fi
+
+    dnl
+    dnl Check if required version of PostgreSQL is available
+    dnl
+
+    postgresql_version_req=ifelse([$1], [], [], [$1])
+
+    if test "x$found_postgresql" = "xyes" -a -n "$postgresql_version_req"; then
+
+        dnl Decompose version string of installed PostgreSQL
+        dnl and calculate its number representation
+        postgresql_version_major=`expr $POSTGRESQL_VERSION : '\([[0-9]]*\)'`
+        postgresql_version_minor=`expr $POSTGRESQL_VERSION : '[[0-9]]*\.\([[0-9]]*\)'`
+        postgresql_version_micro=`expr $POSTGRESQL_VERSION : '[[0-9]]*\.[[0-9]]*\.\([[0-9]]*\)'`
+        if test "x$postgresql_version_micro" = "x"; then
+            postgresql_version_micro="0"
+        fi
+
+        postgresql_version_number=`expr $postgresql_version_major \* 1000000 \
+                                   \+ $postgresql_version_minor \* 1000 \
+                                   \+ $postgresql_version_micro`
+
+        if test -n "$postgresql_version_req"; then
+
+            AC_MSG_CHECKING([if PostgreSQL version is >= $postgresql_version_req])
+
+            dnl Decompose required version string of PostgreSQL
+            dnl and calculate its number representation
+            postgresql_version_req_major=`expr $postgresql_version_req : '\([[0-9]]*\)'`
+            postgresql_version_req_minor=`expr $postgresql_version_req : '[[0-9]]*\.\([[0-9]]*\)'`
+            postgresql_version_req_micro=`expr $postgresql_version_req : '[[0-9]]*\.[[0-9]]*\.\([[0-9]]*\)'`
+            if test "x$postgresql_version_req_micro" = "x"; then
+                postgresql_version_req_micro="0"
+            fi
+
+            postgresql_version_req_number=`expr $postgresql_version_req_major \* 1000000 \
+                                       \+ $postgresql_version_req_minor \* 1000 \
+                                       \+ $postgresql_version_req_micro`
+
+            postgresql_version_check=`expr $postgresql_version_number \>\= $postgresql_version_req_number`
+            if test "$postgresql_version_check" = "1"; then
+                AC_MSG_RESULT([yes])
+            else
+                AC_MSG_RESULT([no])
+            fi
+
+	fi
+
+    fi
+
+    AC_SUBST([POSTGRESQL_CFLAGS])
+    AC_SUBST([POSTGRESQL_LDFLAGS])
+    AC_SUBST([POSTGRESQL_LIBS])
+    AC_SUBST([POSTGRESQL_VERSION])
+])
+m4trace:m4/ax_lib_sqlite3.m4:41: -1- AC_DEFUN([AX_LIB_SQLITE3], [
+    AC_ARG_WITH([sqlite3],
+        AC_HELP_STRING(
+            [--with-sqlite3@<:@=ARG@:>@],
+            [use SQLite 3 library @<:@default=no@:>@, optionally specify the prefix for sqlite3 library]
+        ),
+        [
+        if test "$withval" = "no"; then
+            WANT_SQLITE3="no"
+        elif test "$withval" = "yes"; then
+            WANT_SQLITE3="yes"
+            ac_sqlite3_path=""
+        else
+            WANT_SQLITE3="yes"
+            ac_sqlite3_path="$withval"
+        fi
+        ],
+        [WANT_SQLITE3="no"]
+    )
+
+    SQLITE3_CFLAGS=""
+    SQLITE3_LDFLAGS=""
+    SQLITE3_LIBS=""
+    SQLITE3_VERSION=""
+
+    if test "x$WANT_SQLITE3" = "xyes"; then
+
+        ac_sqlite3_header="sqlite3.h"
+
+        sqlite3_version_req=ifelse([$1], [], [3.0.0], [$1])
+        sqlite3_version_req_shorten=`expr $sqlite3_version_req : '\([[0-9]]*\.[[0-9]]*\)'`
+        sqlite3_version_req_major=`expr $sqlite3_version_req : '\([[0-9]]*\)'`
+        sqlite3_version_req_minor=`expr $sqlite3_version_req : '[[0-9]]*\.\([[0-9]]*\)'`
+        sqlite3_version_req_micro=`expr $sqlite3_version_req : '[[0-9]]*\.[[0-9]]*\.\([[0-9]]*\)'`
+        if test "x$sqlite3_version_req_micro" = "x" ; then
+            sqlite3_version_req_micro="0"
+        fi
+
+        sqlite3_version_req_number=`expr $sqlite3_version_req_major \* 1000000 \
+                                   \+ $sqlite3_version_req_minor \* 1000 \
+                                   \+ $sqlite3_version_req_micro`
+
+        AC_MSG_CHECKING([for SQLite3 library >= $sqlite3_version_req])
+
+        if test "$ac_sqlite3_path" != ""; then
+            ac_sqlite3_cppflags="-I$ac_sqlite3_path/include"
+            ac_sqlite3_ldflags="-L$ac_sqlite3_path/lib"
+        else
+            for ac_sqlite3_path_tmp in /usr /usr/local /opt ; do
+                if test -f "$ac_sqlite3_path_tmp/include/$ac_sqlite3_header" \
+                    && test -r "$ac_sqlite3_path_tmp/include/$ac_sqlite3_header"; then
+                    ac_sqlite3_path=$ac_sqlite3_path_tmp
+                    ac_sqlite3_cppflags="-I$ac_sqlite3_path/include"
+                    ac_sqlite3_ldflags="-L$ac_sqlite3_path/lib"
+                    break;
+                fi
+            done
+        fi
+
+        saved_CPPFLAGS="$CPPFLAGS"
+        CPPFLAGS="$CPPFLAGS $ac_sqlite3_cppflags"
+
+dnl        AC_LANG_PUSH([C++])
+        AC_COMPILE_IFELSE(
+            [
+            AC_LANG_PROGRAM([[@%:@include <sqlite3.h>]],
+                [[
+#if (SQLITE_VERSION_NUMBER >= $sqlite3_version_req_number)
+// Everything is okay
+#else
+#  error SQLite version is too old
+#endif
+                ]]
+            )
+            ],
+            [
+            found_sqlite3="yes"
+            AC_MSG_RESULT([yes])
+            ],
+            [
+            found_sqlite3="no"
+            AC_MSG_RESULT([no])
+            ]
+        )
+dnl      AC_LANG_POP([C++])
+
+        CPPFLAGS="$saved_CPPFLAGS"
+
+        if test "$found_sqlite3" = "yes"; then
+
+            SQLITE3_CPPFLAGS="$ac_sqlite3_cppflags"
+            SQLITE3_LDFLAGS="$ac_sqlite3_ldflags"
+            SQLITE3_LIBS="-lsqlite3"
+
+            ac_sqlite3_header_path="$ac_sqlite3_path/include/$ac_sqlite3_header"
+
+            dnl Retrieve SQLite release version
+            if test "x$ac_sqlite3_header_path" != "x"; then
+                ac_sqlite3_version=`cat $ac_sqlite3_header_path \
+                    | grep '#define.*SQLITE_VERSION.*\"' | sed -e 's/.* "//' \
+                        | sed -e 's/"//'`
+                if test $ac_sqlite3_version != ""; then
+                    SQLITE3_VERSION=$ac_sqlite3_version
+                else
+                    AC_MSG_WARN([Can not find SQLITE_VERSION macro in sqlite3.h header to retrieve SQLite version!])
+                fi
+            fi
+
+            AC_SUBST(SQLITE3_CPPFLAGS)
+            AC_SUBST(SQLITE3_LDFLAGS)
+            AC_SUBST(SQLITE3_LIBS)
+            AC_SUBST(SQLITE3_VERSION)
+            AC_DEFINE(HAVE_SQLITE3, [1], [Define to 1 if SQLite libraries are available])
+        fi
+    fi
+])
+m4trace:m4/iconv.m4:17: -1- AC_DEFUN([LIBICONV_TRY_LINK], [
+AC_TRY_LINK(
+[
+#include <stdlib.h>
+#include <iconv.h>
+],
+[
+	iconv_t cd = iconv_open("","");
+	iconv(cd, NULL, NULL, NULL, NULL);
+	iconv_close(cd);
+],
+found_iconv="yes")
+])
+m4trace:m4/iconv.m4:32: -1- AC_DEFUN([LIBICONV_CHECK_CONFIG], [
+	AC_ARG_WITH([iconv],[
+If you want to specify iconv installation directories:
+AC_HELP_STRING([--with-iconv=@<:@DIR@:>@], [use iconv from given base install directory (DIR), default is to search through a number of common places for the iconv files.])],
+		[
+			ICONV_CFLAGS="-I/$withval/include"
+			ICONV_LDFLAGS="-L/$withval/lib"
+			_iconv_dir_set="yes"
+		]
+	)
+
+	AC_ARG_WITH([iconv-include],
+		AC_HELP_STRING([--with-iconv-include=@<:@DIR@:>@],
+			[use iconv include headers from given path.]
+		),
+		[
+			ICONV_CFLAGS="-I/$withval"
+			_iconv_dir_set="yes"
+		]
+	)
+
+	AC_ARG_WITH([iconv-lib],
+		AC_HELP_STRING([--with-iconv-lib=@<:@DIR@:>@],
+			[use iconv libraries from given path.]
+		),
+		[
+			ICONV_LDFLAGS="-L/$withval"
+			_iconv_dir_set="yes"
+		]
+	)
+
+	AC_MSG_CHECKING(for ICONV support)
+
+	if test -n "$_iconv_dir_set" -o -f /usr/include/iconv.h; then
+		found_iconv="yes"
+	elif test -f /usr/local/include/iconv.h; then
+		ICONV_CFLAGS="-I/usr/local/include"
+		ICONV_LDFLAGS="-L/usr/local/lib"
+		found_iconv="yes"
+	else
+		found_iconv="no"
+		AC_MSG_RESULT(no)
+	fi
+
+	if test "x$found_iconv" = "xyes"; then
+		am_save_CFLAGS="$CFLAGS"
+		am_save_LDFLAGS="$LDFLAGS"
+
+		CFLAGS="$CFLAGS $ICONV_CFLAGS"
+		LDFLAGS="$LDFLAGS $ICONV_LDFLAGS"
+
+		found_iconv="no"
+		LIBICONV_TRY_LINK([no])
+
+		if test "x$found_iconv" = "xno"; then
+			am_save_LIBS="$LIBS"
+			LIBS="$LIBS -liconv"
+			LIBICONV_TRY_LINK([no])
+			LIBS="$am_save_LIBS"
+
+			if test "x$found_iconv" = "xyes"; then
+				ICONV_LIBS="-liconv"
+			fi
+		fi
+
+		CFLAGS="$am_save_CFLAGS"
+		LDFLAGS="$am_save_LDFLAGS"
+	fi
+
+	if test "x$found_iconv" = "xyes"; then
+		AC_DEFINE([HAVE_ICONV], 1, [Define to 1 if you have the 'libiconv' library (-liconv)])
+		AC_MSG_RESULT(yes)
+	else
+		ICONV_CFLAGS=""
+		ICONV_LDFLAGS=""
+	fi
+
+	AC_SUBST(ICONV_CFLAGS)
+	AC_SUBST(ICONV_LDFLAGS)
+])
+m4trace:m4/jabber.m4:20: -1- AC_DEFUN([JABBER_CHECK_CONFIG], [
+  AC_ARG_WITH(jabber,
+[
+If you want to use Jabber protocol for messaging:
+AC_HELP_STRING([--with-jabber@<:@=DIR@:>@],[Include Jabber support @<:@default=no@:>@. DIR is the iksemel library install directory.])],[
+	if test "$withval" = "no"; then
+            want_jabber="no"
+            _libiksemel_with="no"
+        elif test "$withval" = "yes"; then
+            want_jabber="yes"
+            _libiksemel_with="yes"
+        else
+            want_jabber="yes"
+            _libiksemel_with=$withval
+        fi
+     ],[_libiksemel_with=ifelse([$1],,[no],[$1])])
+
+  if test "x$_libiksemel_with" != x"no"; then
+       if test "$_libiksemel_with" = "yes"; then
+		PKG_CHECK_MODULES(IKSEMEL,iksemel,
+			[
+			 JABBER_INCDIR="$IKSEMEL_CPPFLAGS"
+			 JABBER_LIBDIR="$IKSEMEL_LDFLAGS"
+			 JABBER_LIBS="-liksemel"
+			],[
+			 found_iksemel="no"
+			 found_jabber="no"
+			])
+       else
+	       AC_MSG_CHECKING(for iksemel support)
+
+               if test -f $_libiksemel_with/include/iksemel.h; then
+                       JABBER_INCDIR="-I$_libiksemel_with/include"
+                       JABBER_LIBDIR="-L$_libiksemel_with/lib"
+                       JABBER_LIBS="-liksemel"
+		       AC_MSG_RESULT(yes)
+               else
+                       found_iksemel="no"
+                       found_jabber="no"
+                       AC_MSG_RESULT(no)
+               fi
+       fi
+
+       if test "x$found_iksemel" != "xno" ; then
+
+               AC_CHECK_FUNCS(getaddrinfo)
+
+               JABBER_CPPFLAGS=$JABBER_INCDIR
+               JABBER_LDFLAGS="$JABBER_LIBDIR"
+
+		if test "x$enable_static" = "xyes"; then
+			for i in -liksemel -lgnutls -ltasn1 -lgcrypt -lgpg-error; do
+				case $i in
+					-liksemel)
+				;;
+					-l*)
+						_lib_name=`echo "$i" | cut -b3-`
+						AC_CHECK_LIB($_lib_name , main,[
+							JABBER_LIBS="$JABBER_LIBS $i"
+						],[
+							AC_MSG_ERROR([Not found $_lib_name library])
+						])
+				;;
+				esac
+			done
+		fi
+
+               found_iksemel="yes"
+               found_jabber="yes"
+               AC_DEFINE(HAVE_IKSEMEL,1,[Define to 1 if Iksemel library should be enabled.])
+               AC_DEFINE(HAVE_JABBER,1,[Define to 1 if Jabber should be enabled.])
+       fi
+  fi
+
+  AC_SUBST(JABBER_CPPFLAGS)
+  AC_SUBST(JABBER_LDFLAGS)
+  AC_SUBST(JABBER_LIBS)
+
+  unset _libiksemel_with
+])
+m4trace:m4/ldap.m4:20: -1- AC_DEFUN([LIBLDAP_CHECK_CONFIG], [
+  AC_ARG_WITH(ldap,
+    [If you want to check LDAP servers:
+AC_HELP_STRING([--with-ldap@<:@=DIR@:>@],[Include LDAP support @<:@default=no@:>@. DIR is the LDAP base install directory, default is to search through a number of common places for the LDAP files.])],
+     [ if test "$withval" = "no"; then
+            want_ldap="no"
+            _libldap_with="no"
+        elif test "$withval" = "yes"; then
+            want_ldap="yes"
+            _libldap_with="yes"
+        else
+            want_ldap="yes"
+            _libldap_with=$withval
+        fi
+     ],[_libldap_with=ifelse([$1],,[no],[$1])])
+
+  if test "x$_libldap_with" != x"no"; then
+       AC_MSG_CHECKING(for LDAP support)
+
+       if test "$_libldap_with" = "yes"; then
+               if test -f /usr/local/openldap/include/ldap.h; then
+                       LDAP_INCDIR=/usr/local/openldap/include/
+                       LDAP_LIBDIR=/usr/local/openldap/lib/
+		       found_ldap="yes"
+               elif test -f /usr/include/ldap.h; then
+                       LDAP_INCDIR=/usr/include
+                       LDAP_LIBDIR=/usr/lib
+		       found_ldap="yes"
+               elif test -f /usr/local/include/ldap.h; then
+                       LDAP_INCDIR=/usr/local/include
+                       LDAP_LIBDIR=/usr/local/lib
+		       found_ldap="yes"
+               else
+                       found_ldap="no"
+                       AC_MSG_RESULT(no)
+               fi
+       else
+               if test -f $_libldap_with/include/ldap.h; then
+                       LDAP_INCDIR=$_libldap_with/include
+                       LDAP_LIBDIR=$_libldap_with/lib
+		       found_ldap="yes"
+               else
+                       found_ldap="no"
+                       AC_MSG_RESULT(no)
+               fi
+       fi
+
+       if test "x$found_ldap" != "xno"; then
+               if test "x$enable_static" = "xyes"; then
+                       LDAP_LIBS=" -lgnutls -lpthread -lsasl2 $LDAP_LIBS"
+               fi
+
+               LDAP_CPPFLAGS="-I$LDAP_INCDIR"
+               LDAP_LDFLAGS="-L$LDAP_LIBDIR"
+               LDAP_LIBS="-lldap -llber $LDAP_LIBS"
+
+               found_ldap="yes"
+               AC_DEFINE(HAVE_LDAP,1,[Define to 1 if LDAP should be enabled.])
+	       AC_DEFINE(LDAP_DEPRECATED, 1, [Define to 1 if LDAP depricated functions is used.])
+               AC_MSG_RESULT(yes)
+
+	       if test "x$enable_static" = "xyes"; then
+                       AC_CHECK_LIB(gnutls, main, , AC_MSG_ERROR([Not found GnuTLS library]))
+                       AC_CHECK_LIB(pthread, main, , AC_MSG_ERROR([Not found Pthread library]))
+                       AC_CHECK_LIB(sasl2, main, , AC_MSG_ERROR([Not found SASL2 library]))
+               fi
+
+       fi
+  fi
+
+  AC_SUBST(LDAP_CPPFLAGS)
+  AC_SUBST(LDAP_LDFLAGS)
+  AC_SUBST(LDAP_LIBS)
+
+  unset _libldap_with
+])
+m4trace:m4/libcurl.m4:38: -1- AC_DEFUN([LIBCURL_CHECK_CONFIG], [
+  AH_TEMPLATE([LIBCURL_FEATURE_SSL],[Defined if libcurl supports SSL])
+  AH_TEMPLATE([LIBCURL_FEATURE_KRB4],[Defined if libcurl supports KRB4])
+  AH_TEMPLATE([LIBCURL_FEATURE_IPV6],[Defined if libcurl supports IPv6])
+  AH_TEMPLATE([LIBCURL_FEATURE_LIBZ],[Defined if libcurl supports libz])
+  AH_TEMPLATE([LIBCURL_FEATURE_ASYNCHDNS],[Defined if libcurl supports AsynchDNS])
+  AH_TEMPLATE([LIBCURL_FEATURE_IDN],[Defined if libcurl supports IDN])
+  AH_TEMPLATE([LIBCURL_FEATURE_SSPI],[Defined if libcurl supports SSPI])
+  AH_TEMPLATE([LIBCURL_FEATURE_NTLM],[Defined if libcurl supports NTLM])
+
+  AH_TEMPLATE([LIBCURL_PROTOCOL_HTTP],[Defined if libcurl supports HTTP])
+  AH_TEMPLATE([LIBCURL_PROTOCOL_HTTPS],[Defined if libcurl supports HTTPS])
+  AH_TEMPLATE([LIBCURL_PROTOCOL_FTP],[Defined if libcurl supports FTP])
+  AH_TEMPLATE([LIBCURL_PROTOCOL_FTPS],[Defined if libcurl supports FTPS])
+  AH_TEMPLATE([LIBCURL_PROTOCOL_FILE],[Defined if libcurl supports FILE])
+  AH_TEMPLATE([LIBCURL_PROTOCOL_TELNET],[Defined if libcurl supports TELNET])
+  AH_TEMPLATE([LIBCURL_PROTOCOL_LDAP],[Defined if libcurl supports LDAP])
+  AH_TEMPLATE([LIBCURL_PROTOCOL_DICT],[Defined if libcurl supports DICT])
+  AH_TEMPLATE([LIBCURL_PROTOCOL_TFTP],[Defined if libcurl supports TFTP])
+
+  _libcurl_config="no"
+
+  AC_ARG_WITH(libcurl,
+     [
+If you want to use cURL library:
+AC_HELP_STRING([--with-libcurl@<:@=DIR@:>@],[use cURL package @<:@default=no@:>@, optionally specify path to curl-config])],
+        [
+        if test "x$withval" = "xno"; then
+            want_curl="no"
+        elif test "x$withval" = "xyes"; then
+            want_curl="yes"
+        else
+            want_curl="yes"
+            _libcurl_config=$withval
+        fi
+        ],
+        [want_curl=ifelse([$1],,[no],[$1])])
+
+  if test "x$want_curl" != "xno"; then
+
+     AC_PROG_AWK
+
+     _libcurl_version_parse="eval $AWK '{split(\$NF,A,\".\"); X=256*256*A[[1]]+256*A[[2]]+A[[3]]; print X;}'"
+
+     _libcurl_try_link=no
+
+     AC_PATH_PROG([_libcurl_config], [curl-config], [])
+
+     if test -x "$_libcurl_config"; then
+        AC_CACHE_CHECK([for the version of libcurl],
+	   [libcurl_cv_lib_curl_version],
+           [libcurl_cv_lib_curl_version=`$_libcurl_config --version | $AWK '{print $[]2}'`])
+
+	_libcurl_version=`echo $libcurl_cv_lib_curl_version | $_libcurl_version_parse`
+	_libcurl_wanted=`echo ifelse([$2],,[0],[$2]) | $_libcurl_version_parse`
+
+        if test $_libcurl_wanted -gt 0; then
+	   AC_CACHE_CHECK([for libcurl >= version $2],
+	      [libcurl_cv_lib_version_ok],
+              [
+   	      if test $_libcurl_version -ge $_libcurl_wanted; then
+	         libcurl_cv_lib_version_ok=yes
+      	      else
+	         libcurl_cv_lib_version_ok=no
+  	      fi
+              ])
+        fi
+
+	if test $_libcurl_wanted -eq 0 || test "x$libcurl_cv_lib_version_ok" = "xyes"; then
+           if test "x$LIBCURL_CFLAGS" = "x"; then
+              LIBCURL_CFLAGS=`$_libcurl_config --cflags`
+           fi
+           if test "x$LIBCURL_LIBS" = "x"; then
+		_full_libcurl_libs=`$_libcurl_config --libs`
+		for i in $_full_libcurl_libs; do
+			case $i in
+				-L*)
+					LIBCURL_LDFLAGS="$LIBCURL_LDFLAGS $i"
+			;;
+				-l*)
+					LIBCURL_LIBS="$LIBCURL_LIBS $i"
+			;;
+			esac
+		done
+
+		if test "x$enable_static" = "xyes"; then
+			_full_libcurl_libs=`$_libcurl_config --static-libs`
+			for i in $_full_libcurl_libs; do
+				case $i in
+					-lcurl)
+				;;
+					-l*)
+						_lib_name=`echo "$i" | cut -b3-`
+						AC_CHECK_LIB($_lib_name , main,[
+								LIBCURL_LIBS="$LIBCURL_LIBS $i"
+							],[
+								AC_MSG_ERROR([static library $_lib_name required for linking libcurl not found])
+							])
+
+				;;
+				esac
+			done
+		fi
+
+		_save_curl_cflags="$CFLAGS"
+		_save_curl_ldflags="$LDFLAGS"
+		_save_curl_libs="$LIBS"
+		CFLAGS="$CFLAGS $LIBCURL_CFLAGS"
+		LDFLAGS="$LDFLAGS $LIBCURL_LDFLAGS"
+		LIBS="$LIBS $LIBCURL_LIBS"
+
+		AC_CHECK_LIB(curl, main, , [AC_MSG_ERROR([libcurl library not found])])
+
+		CFLAGS="$_save_curl_cflags"
+		LDFLAGS="$_save_curl_ldflags"
+		LIBS="$_save_curl_libs"
+		unset _save_curl_cflags
+		unset _save_curl_ldflags
+		unset _save_curl_libs
+
+              # This is so silly, but Apple actually has a bug in their
+	      # curl-config script.  Fixed in Tiger, but there are still
+	      # lots of Panther installs around.
+              case "${host}" in
+                 powerpc-apple-darwin7*)
+                    LIBCURL_LIBS=`echo $LIBCURL_LIBS | sed -e 's|-arch i386||g'`
+                 ;;
+              esac
+           fi
+
+	   # All curl-config scripts support --feature
+	   _libcurl_features=`$_libcurl_config --feature`
+
+           # Is it modern enough to have --protocols? (7.12.4)
+	   if test $_libcurl_version -ge 461828; then
+              _libcurl_protocols=`$_libcurl_config --protocols`
+           fi
+
+           _libcurl_try_link=yes
+	fi
+
+	unset _libcurl_wanted
+     fi
+     if test "x$_libcurl_try_link" = "xyes"; then
+        # we didn't find curl-config, so let's see if the user-supplied
+        # link line (or failing that, "-lcurl") is enough.
+        LIBCURL_LIBS=${LIBCURL_LIBS-"$_libcurl_libs -lcurl"}
+
+        AC_CACHE_CHECK([whether libcurl is usable],
+           [libcurl_cv_lib_curl_usable],
+           [
+		_save_curl_libs="${LIBS}"
+		_save_curl_ldflags="${LDFLAGS}"
+		_save_curl_cflags="${CFLAGS}"
+		LIBS="${LIBS} ${LIBCURL_LIBS}"
+		LDFLAGS="${LDFLAGS} ${LIBCURL_LDFLAGS}"
+		CFLAGS="${CFLAGS} ${LIBCURL_CFLAGS}"
+
+           AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <curl/curl.h>
+#ifndef NULL
+#define NULL (void *)0
+#endif],[
+/* Try and use a few common options to force a failure if we are
+   missing symbols or can't link. */
+int x;
+curl_easy_setopt(NULL,CURLOPT_URL,NULL);
+x=CURL_ERROR_SIZE;
+x=CURLOPT_WRITEFUNCTION;
+x=CURLOPT_FILE;
+x=CURLOPT_ERRORBUFFER;
+x=CURLOPT_STDERR;
+x=CURLOPT_VERBOSE;
+])],libcurl_cv_lib_curl_usable=yes,libcurl_cv_lib_curl_usable=no)
+
+		LIBS="${_save_curl_libs}"
+		LDFLAGS="${_save_curl_ldflags}"
+		CFLAGS="${_save_curl_cflags}"
+		unset _save_curl_libs
+		unset _save_curl_ldflags
+		unset _save_curl_cflags
+	])
+
+	if test "x$libcurl_cv_lib_curl_usable" = "xno"; then
+		link_mode="dynamic"
+		if test "x$enable_static" = "xyes"; then
+			link_mode="static"
+		fi
+		AC_MSG_ERROR([libcurl is not available for ${link_mode} linking])
+	fi
+
+	# Does curl_free() exist in this version of libcurl?
+	# If not, fake it with free()
+
+	_save_curl_libs="${LIBS}"
+	_save_curl_ldflags="${LDFLAGS}"
+	_save_curl_cflags="${CFLAGS}"
+	LIBS="${LIBS} ${LIBCURL_LIBS}"
+	LDFLAGS="${LDFLAGS} ${LIBCURL_LDFLAGS}"
+	CFLAGS="${CFLAGS} ${LIBCURL_CFLAGS}"
+
+	AC_CHECK_FUNC(curl_free,,
+		AC_DEFINE(curl_free,free,
+			[Define curl_free() as free() if our version of curl lacks curl_free.]))
+
+	AC_CHECK_FUNC(curl_easy_escape,
+		AC_DEFINE(HAVE_FUNCTION_CURL_EASY_ESCAPE,1,
+			[Define to 1 if function 'curl_easy_escape' exists.]))
+
+	LIBS="${_save_curl_libs}"
+	LDFLAGS="${_save_curl_ldflags}"
+	CFLAGS="${_save_curl_cflags}"
+	unset _save_curl_libs
+	unset _save_curl_ldflags
+	unset _save_curl_cflags
+
+	AC_DEFINE(HAVE_LIBCURL,1,
+		[Define to 1 if you have a functional curl library.])
+	AC_SUBST(LIBCURL_CFLAGS)
+	AC_SUBST(LIBCURL_LDFLAGS)
+	AC_SUBST(LIBCURL_LIBS)
+	found_curl="yes"
+
+	for _libcurl_feature in $_libcurl_features ; do
+		AC_DEFINE_UNQUOTED(AS_TR_CPP(libcurl_feature_$_libcurl_feature),[1])
+		eval AS_TR_SH(libcurl_feature_$_libcurl_feature)=yes
+	done
+
+	if test "x$_libcurl_protocols" = "x"; then
+		# We don't have --protocols, so just assume that all
+		# protocols are available
+		_libcurl_protocols="HTTP FTP FILE TELNET LDAP DICT"
+
+		if test "x$libcurl_feature_SSL" = "xyes"; then
+			_libcurl_protocols="$_libcurl_protocols HTTPS"
+
+			# FTPS wasn't standards-compliant until version
+			# 7.11.0
+			if test $_libcurl_version -ge 461568; then
+				_libcurl_protocols="$_libcurl_protocols FTPS"
+			fi
+		fi
+	fi
+
+	for _libcurl_protocol in $_libcurl_protocols ; do
+		AC_DEFINE_UNQUOTED(AS_TR_CPP(libcurl_protocol_$_libcurl_protocol),[1])
+		eval AS_TR_SH(libcurl_protocol_$_libcurl_protocol)=yes
+        done
+     else
+	   unset LIBCURL_LIBS
+	   unset LIBCURL_CFLAGS
+     fi
+
+     unset _libcurl_try_link
+     unset _libcurl_version_parse
+     unset _libcurl_config
+     unset _libcurl_feature
+     unset _libcurl_features
+     unset _libcurl_protocol
+     unset _libcurl_protocols
+     unset _libcurl_version
+     unset _libcurl_libs
+  fi
+
+  if test "x$want_curl" = "xno" || test "x$libcurl_cv_lib_curl_usable" != "xyes"; then
+     # This is the IF-NO path
+     ifelse([$4],,:,[$4])
+  else
+     # This is the IF-YES path
+     ifelse([$3],,:,[$3])
+  fi
+
+])
+m4trace:m4/libssh2.m4:24: -1- AC_DEFUN([LIBSSH2_TRY_LINK], [
+AC_TRY_LINK(
+[
+#include <libssh2.h>
+],
+[
+	LIBSSH2_SESSION	*session;
+	session = libssh2_session_init();
+],
+found_ssh2="yes",)
+])
+m4trace:m4/libssh2.m4:37: -1- AC_DEFUN([LIBSSH2_ACCEPT_VERSION], [
+	# Zabbix minimal major supported version of libssh2:
+	minimal_libssh2_major_version=1
+
+	# get the major version
+	found_ssh2_version_major=`cat $1 | $EGREP \#define.*LIBSSH2_VERSION_MAJOR | $AWK '{print @S|@3;}'`
+
+	accept_ssh2_version="no"
+
+	if test $found_ssh2_version_major -ge $minimal_libssh2_major_version; then
+		accept_ssh2_version="yes"
+	fi;
+])
+m4trace:m4/libssh2.m4:52: -1- AC_DEFUN([LIBSSH2_CHECK_CONFIG], [
+  AC_ARG_WITH(ssh2,[If you want to use SSH2 based checks:
+AC_HELP_STRING([--with-ssh2@<:@=DIR@:>@],[use SSH2 package @<:@default=no@:>@, DIR is the SSH2 library install directory.])],
+    [
+	if test "$withval" = "no"; then
+	    want_ssh2="no"
+	    _libssh2_dir="no"
+	elif test "$withval" = "yes"; then
+	    want_ssh2="yes"
+	    _libssh2_dir="no"
+	else
+	    want_ssh2="yes"
+	    _libssh2_dir=$withval
+	fi
+	accept_ssh2_version="no"
+    ],[want_ssh2=ifelse([$1],,[no],[$1])]
+  )
+
+  if test "x$want_ssh2" = "xyes"; then
+     AC_MSG_CHECKING(for SSH2 support)
+     if test "x$_libssh2_dir" = "xno"; then
+       if test -f /usr/include/libssh2.h; then
+         SSH2_CFLAGS=-I/usr/include
+         SSH2_LDFLAGS=-L/usr/lib
+         SSH2_LIBS="-lssh2"
+         found_ssh2="yes"
+	 LIBSSH2_ACCEPT_VERSION([/usr/include/libssh2.h])
+       elif test -f /usr/local/include/libssh2.h; then
+         SSH2_CFLAGS=-I/usr/local/include
+         SSH2_LDFLAGS=-L/usr/local/lib
+         SSH2_LIBS="-lssh2"
+         found_ssh2="yes"
+	 LIBSSH2_ACCEPT_VERSION([/usr/local/include/libssh2.h])
+       else #libraries are not found in default directories
+         found_ssh2="no"
+         AC_MSG_RESULT(no)
+       fi # test -f /usr/include/libssh2.h; then
+     else # test "x$_libssh2_dir" = "xno"; then
+       if test -f $_libssh2_dir/include/libssh2.h; then
+	 SSH2_CFLAGS=-I$_libssh2_dir/include
+         SSH2_LDFLAGS=-L$_libssh2_dir/lib
+         SSH2_LIBS="-lssh2"
+         found_ssh2="yes"
+	 LIBSSH2_ACCEPT_VERSION([$_libssh2_dir/include/libssh2.h])
+       else #if test -f $_libssh2_dir/include/libssh2.h; then
+         found_ssh2="no"
+         AC_MSG_RESULT(no)
+       fi #test -f $_libssh2_dir/include/libssh2.h; then
+     fi #if test "x$_libssh2_dir" = "xno"; then
+  fi # if test "x$want_ssh2" != "xno"; then
+
+  if test "x$found_ssh2" = "xyes"; then
+    am_save_cflags="$CFLAGS"
+    am_save_ldflags="$LDFLAGS"
+    am_save_libs="$LIBS"
+
+    CFLAGS="$CFLAGS $SSH2_CFLAGS"
+    LDFLAGS="$LDFLAGS $SSH2_LDFLAGS"
+    LIBS="$LIBS $SSH2_LIBS"
+
+    found_ssh2="no"
+    LIBSSH2_TRY_LINK([no])
+
+    CFLAGS="$am_save_cflags"
+    LDFLAGS="$am_save_ldflags"
+    LIBS="$am_save_libs"
+
+    if test "x$found_ssh2" = "xyes"; then
+      AC_DEFINE([HAVE_SSH2], 1, [Define to 1 if you have the 'libssh2' library (-lssh2)])
+      AC_MSG_RESULT(yes)
+    else
+      AC_MSG_RESULT(no)
+      SSH2_CFLAGS=""
+      SSH2_LDFLAGS=""
+      SSH2_LIBS=""
+    fi
+  fi
+
+  AC_SUBST(SSH2_CFLAGS)
+  AC_SUBST(SSH2_LDFLAGS)
+  AC_SUBST(SSH2_LIBS)
+
+])
+m4trace:m4/libunixodbc.m4:20: -1- AC_DEFUN([LIBUNIXODBC_CHECK_CONFIG], [
+  AC_ARG_WITH(unixodbc,
+     [
+If you want to use unixODBC library:
+AC_HELP_STRING([--with-unixodbc@<:@=ARG@:>@],
+		[use ODBC driver against unixODBC package @<:@default=no@:>@, optionally specify full path to odbc_config binary.])
+    ],[ if test "x$withval" = "xno"; then
+            want_unixodbc="no"
+        elif test "x$withval" = "xyes"; then
+            want_unixodbc="yes"
+        else
+            want_unixodbc="yes"
+            specified_unixodbc="yes"
+            ODBC_CONFIG=$withval
+        fi
+     ],[want_unixodbc=ifelse([$1],,[no],[$1])])
+
+  if test "x$want_unixodbc" != "xno"; then
+	AC_PATH_PROG([ODBC_CONFIG], [odbc_config], [])
+
+	found_unixodbc="yes"
+
+	UNIXODBC_LIBS="-lodbc"
+
+	if test -x "$ODBC_CONFIG"; then
+		UNIXODBC_CFLAGS="-I`$ODBC_CONFIG --include-prefix`"
+		UNIXODBC_LDFLAGS="-L`$ODBC_CONFIG --lib-prefix`"
+	elif test "x$specified_unixodbc" = "xyes"; then
+		found_unixodbc="file $ODBC_CONFIG not found or not executable"
+	fi
+
+	if test "x$found_unixodbc" = "xyes"; then
+		_save_unixodbc_cflags="${CFLAGS}"
+		_save_unixodbc_ldflags="${LDFLAGS}"
+		_save_unixodbc_libs="${LIBS}"
+		CFLAGS="${CFLAGS} ${UNIXODBC_CFLAGS}"
+		LDFLAGS="${LDFLAGS} ${UNIXODBC_LDFLAGS}"
+		LIBS="${LIBS} ${UNIXODBC_LIBS}"
+
+		AC_CHECK_LIB(odbc, main, , [found_unixodbc="unixODBC library not found"])
+
+		if test "x$found_unixodbc" = "xyes"; then
+			AC_CACHE_CHECK([whether unixodbc is usable],
+				[libunixodbc_cv_usable],
+				[AC_LINK_IFELSE([AC_LANG_PROGRAM([
+#include <sql.h>
+#include <sqlext.h>
+#include <sqltypes.h>
+				],[
+/* try and use a few common options to force a failure if we are missing symbols or can't link */
+SQLRETURN	retcode;
+
+retcode = SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, (SQLHENV*)0);
+				])],libunixodbc_cv_usable=yes,libunixodbc_cv_usable=no)
+			])
+
+			CFLAGS="${_save_unixodbc_cflags}"
+			LDFLAGS="${_save_unixodbc_ldflags}"
+			LIBS="${_save_unixodbc_libs}"
+			unset _save_unixodbc_cflags
+			unset _save_unixodbc_ldflags
+			unset _save_unixodbc_libs
+
+			if test "$libunixodbc_cv_usable" != "yes"; then
+				found_unixodbc="cannot use unixODBC library"
+			else
+				AC_DEFINE(HAVE_UNIXODBC,1,[Define to 1 if unixUNIXODBC Driver Manager should be used.])
+			fi
+		fi
+	fi
+  fi
+
+  AC_SUBST(UNIXODBC_LDFLAGS)
+  AC_SUBST(UNIXODBC_CFLAGS)
+  AC_SUBST(UNIXODBC_LIBS)
+
+])
+m4trace:m4/libxml2.m4:20: -1- AC_DEFUN([LIBXML2_CHECK_CONFIG], [
+    LIBXML2_CONFIG="no"
+
+    AC_ARG_WITH(libxml2,
+        [
+If you want to use XML library:
+AC_HELP_STRING([--with-libxml2@<:@=ARG@:>@],
+    [use libxml2 client library @<:@default=no@:>@, optionally specify path to xml2-config]
+        )],
+        [
+        if test "$withval" = "no"; then
+            want_libxml2="no"
+        elif test "$withval" = "yes"; then
+            want_libxml2="yes"
+        else
+            want_libxml2="yes"
+            LIBXML2_CONFIG="$withval"
+        fi
+        ],
+        [want_libxml2="no"]
+    )
+
+    LIBXML2_CFLAGS=""
+    LIBXML2_LDFLAGS=""
+    LIBXML2_LIBS=""
+    LIBXML2_VERSION=""
+
+    dnl
+    dnl Check libxml2 libraries
+    dnl
+
+    if test "$want_libxml2" = "yes"; then
+
+        AC_PATH_PROG([LIBXML2_CONFIG], [xml2-config], [])
+
+        if test -x "$LIBXML2_CONFIG"; then
+
+            LIBXML2_CFLAGS="`$LIBXML2_CONFIG --cflags`"
+
+            _full_libxml2_libs="`$LIBXML2_CONFIG --libs`"
+
+            for i in $_full_libxml2_libs; do
+                case $i in
+                   -lxml2)
+                        ;;
+                   -L*)
+                        LIBXML2_LDFLAGS="${LIBXML2_LDFLAGS} $i"
+                        ;;
+                esac
+            done
+
+            if test "x$enable_static" = "xyes"; then
+                for i in $_full_libxml2_libs; do
+                    case $i in
+                        -lxml2)
+                            ;;
+                        -l*)
+                            _lib_name="`echo "$i" | cut -b3-`"
+                            AC_CHECK_LIB($_lib_name, main, [
+                                    LIBXML2_LIBS="$LIBXML2_LIBS $i"
+                                    ],[
+                                    AC_MSG_ERROR([Not found $_lib_name library])
+                                    ])
+                            ;;
+                    esac
+                done
+            fi
+
+            _save_libxml2_libs="${LIBS}"
+            _save_libxml2_ldflags="${LDFLAGS}"
+            _save_libxml2_cflags="${CFLAGS}"
+            LIBS="${LIBS} ${LIBXML2_LIBS}"
+            LDFLAGS="${LDFLAGS} ${LIBXML2_LDFLAGS}"
+            CFLAGS="${CFLAGS} ${LIBXML2_CFLAGS}"
+
+            AC_CHECK_LIB(xml2, xmlReadMemory, [
+                    LIBXML2_LIBS="-lxml2 ${LIBXML2_LIBS}"
+                    ],[
+                    AC_MSG_ERROR([Not found libxml2 library])
+                    ])
+
+            LIBS="${_save_libxml2_libs}"
+            LDFLAGS="${_save_libxml2_ldflags}"
+            CFLAGS="${_save_libxml2_cflags}"
+            unset _save_libxml2_libs
+            unset _save_libxml2_ldflags
+            unset _save_libxml2_cflags
+
+            LIBXML2_VERSION=`$LIBXML2_CONFIG --version`
+
+            AC_DEFINE([HAVE_LIBXML2], [1], [Define to 1 if libxml2 libraries are available])
+
+            found_libxml2="yes"
+        else
+            found_libxml2="no"
+        fi
+    fi
+
+    AC_SUBST([LIBXML2_VERSION])
+    AC_SUBST([LIBXML2_CFLAGS])
+    AC_SUBST([LIBXML2_LDFLAGS])
+    AC_SUBST([LIBXML2_LIBS])
+])
+m4trace:m4/netsnmp.m4:20: -1- AC_DEFUN([LIBNETSNMP_CHECK_CONFIG], [
+  _libnetsnmp_config="no"
+
+  AC_ARG_WITH(net-snmp,
+[If you want to use Net-SNMP library:
+AC_HELP_STRING([--with-net-snmp@<:@=ARG@:>@],
+		[use Net-SNMP package @<:@default=no@:>@, optionally specify path to net-snmp-config])
+	],[ if test "$withval" = "no"; then
+            want_netsnmp="no"
+        elif test "$withval" = "yes"; then
+            want_netsnmp="yes"
+        else
+            want_netsnmp="yes"
+            _libnetsnmp_config=$withval
+        fi
+     ],[want_netsnmp=ifelse([$1],,[no],[$1])])
+
+  SNMP_CFLAGS=""
+  SNMP_LDFLAGS=""
+  SNMP_LIBS=""
+
+  if test "x$want_netsnmp" != "xno"; then
+
+        AC_PATH_PROG([_libnetsnmp_config], [net-snmp-config], [])
+
+	if test -x "$_libnetsnmp_config"; then
+
+		_full_libnetsnmp_cflags="`$_libnetsnmp_config --cflags`"
+		for i in $_full_libnetsnmp_cflags; do
+			case $i in
+				-I*)
+					SNMP_CFLAGS="$SNMP_CFLAGS $i"
+
+			;;
+			esac
+		done
+
+		_full_libnetsnmp_libs="`$_libnetsnmp_config --libs` -lcrypto"
+		for i in $_full_libnetsnmp_libs; do
+			case $i in
+				-L*)
+					SNMP_LDFLAGS="${SNMP_LDFLAGS} $i"
+			;;
+				-l*)
+					SNMP_LIBS="${SNMP_LIBS} $i"
+			;;
+			esac
+		done
+
+		if test "x$enable_static" = "xyes"; then
+			for i in $_full_libnetsnmp_libs; do
+				case $i in
+					-lnetsnmp)
+				;;
+					-l*)
+						_lib_name="`echo "$i" | cut -b3-`"
+						AC_CHECK_LIB($_lib_name, main, [
+								SNMP_LIBS="$SNMP_LIBS $i"
+							],[
+								AC_MSG_ERROR([Not found $_lib_name library])
+							])
+
+				;;
+				esac
+			done
+		fi
+
+		_save_netsnmp_cflags="$CFLAGS"
+		_save_netsnmp_ldflags="$LDFLAGS"
+		_save_netsnmp_libs="$LIBS"
+		CFLAGS="$CFLAGS $SNMP_CFLAGS"
+		LDFLAGS="$LDFLAGS $SNMP_LDFLAGS"
+		LIBS="$LIBS $SNMP_LIBS"
+
+		AC_CHECK_LIB(netsnmp, main, , [AC_MSG_ERROR([Not found Net-SNMP library])])
+
+		dnl Check for localname in struct snmp_session
+		AC_MSG_CHECKING(for localname in struct snmp_session)
+		AC_TRY_COMPILE([
+#include <net-snmp/net-snmp-config.h>
+#include <net-snmp/net-snmp-includes.h>],
+		[
+struct snmp_session session;
+session.localname = "";
+		],
+		AC_DEFINE(HAVE_SNMP_SESSION_LOCALNAME, 1, [Define to 1 if 'session.localname' exist.])
+		AC_MSG_RESULT(yes),
+		AC_MSG_RESULT(no))
+
+		CFLAGS="$_save_netsnmp_cflags"
+		LDFLAGS="$_save_netsnmp_ldflags"
+		LIBS="$_save_netsnmp_libs"
+		unset _save_netsnmp_cflags
+		unset _save_netsnmp_ldflags
+		unset _save_netsnmp_libs
+
+		AC_DEFINE(HAVE_NETSNMP, 1, [Define to 1 if Net-SNMP should be enabled.])
+		AC_DEFINE(HAVE_SNMP, 1, [Define to 1 if SNMP should be enabled.])
+		AC_DEFINE([SNMP_NO_DEBUGGING], [], [Disabling debugging messages from Net-SNMP library])
+
+		found_netsnmp="yes"
+	else
+		found_netsnmp="no"
+	fi
+  fi
+
+  AC_SUBST(SNMP_CFLAGS)
+  AC_SUBST(SNMP_LDFLAGS)
+  AC_SUBST(SNMP_LIBS)
+])
+m4trace:m4/openipmi.m4:20: -1- AC_DEFUN([LIBOPENIPMI_CHECK_CONFIG], [
+  AC_ARG_WITH(openipmi,
+    [
+If you want to check IPMI devices:
+AC_HELP_STRING([--with-openipmi@<:@=DIR@:>@],[Include OPENIPMI support @<:@default=no@:>@. DIR is the OPENIPMI base install directory, default is to search through a number of common places for the OPENIPMI files.])
+    ],[ if test "$withval" = "no"; then
+            want_openipmi="no"
+            _libopenipmi_with="no"
+        elif test "$withval" = "yes"; then
+            want_openipmi="yes"
+            _libopenipmi_with="yes"
+        else
+            want_openipmi="yes"
+            _libopenipmi_with=$withval
+        fi
+     ],[_libopenipmi_with=ifelse([$1],,[no],[$1])])
+
+  if test "x$_libopenipmi_with" != x"no"; then
+       AC_MSG_CHECKING(for OPENIPMI support)
+
+       if test "$_libopenipmi_with" = "yes"; then
+               if test -f /usr/local/include/OpenIPMI/ipmiif.h; then
+                       OPENIPMI_INCDIR=/usr/local/include
+                       OPENIPMI_LIBDIR=/usr/local/lib
+		       found_openipmi="yes"
+               elif test -f /usr/include/OpenIPMI/ipmiif.h; then
+                       OPENIPMI_INCDIR=/usr/include
+                       OPENIPMI_LIBDIR=/usr/lib
+		       found_openipmi="yes"
+               else
+                       found_openipmi="no"
+                       AC_MSG_RESULT(no)
+               fi
+       else
+               if test -f $_libopenipmi_with/include/OpenIPMI/ipmiif.h; then
+                       OPENIPMI_INCDIR=$_libopenipmi_with/include
+                       OPENIPMI_LIBDIR=$_libopenipmi_with/lib
+		       found_openipmi="yes"
+               else
+                       found_openipmi="no"
+                       AC_MSG_RESULT(no)
+               fi
+       fi
+
+       if test "x$found_openipmi" != "xno" ; then
+               OPENIPMI_CFLAGS="-I$OPENIPMI_INCDIR"
+               OPENIPMI_LDFLAGS="-L$OPENIPMI_LIBDIR"
+               OPENIPMI_LIBS="-lOpenIPMI -lOpenIPMIposix"
+
+               found_openipmi="yes"
+               AC_DEFINE(HAVE_OPENIPMI,1,[Define to 1 if OPENIPMI should be enabled.])
+	       AC_DEFINE(OPENIPMI_DEPRECATED, 1, [Define to 1 if OPENIPMI depricated functions is used.])
+               AC_MSG_RESULT(yes)
+	fi
+  fi
+
+  AC_SUBST(OPENIPMI_CFLAGS)
+  AC_SUBST(OPENIPMI_LDFLAGS)
+  AC_SUBST(OPENIPMI_LIBS)
+
+  unset _libopenipmi_with
+])
+m4trace:m4/resolv.m4:7: -1- AC_DEFUN([LIBRESOLV_TRY_LINK], [
+am_save_LIBS="$LIBS"
+LIBS="$LIBS $1"
+AC_TRY_LINK(
+[
+#ifdef HAVE_SYS_TYPES_H
+#	include <sys/types.h>
+#endif
+#ifdef HAVE_NETINET_IN_H
+#	include <netinet/in.h>
+#endif
+#ifdef HAVE_ARPA_NAMESER_H
+#	include <arpa/nameser.h>
+#endif
+#ifdef HAVE_RESOLV_H
+#	include <resolv.h>
+#endif
+#ifndef C_IN
+#	define C_IN	ns_c_in
+#endif	/* C_IN */
+#ifndef T_SOA
+#	define T_SOA	ns_t_soa
+#endif	/* T_SOA */
+],
+[
+	char	*buf;
+
+	res_init();
+	res_query("", C_IN, T_SOA, buf, 0);
+],
+found_resolv="yes"
+RESOLV_LIBS="$1")
+LIBS="$am_save_LIBS"
+])
+m4trace:m4/resolv.m4:43: -1- AC_DEFUN([LIBRESOLV_CHECK_CONFIG], [
+	AC_MSG_CHECKING(for DNS lookup functions)
+
+	LIBRESOLV_TRY_LINK([])
+
+	if test "x$found_resolv" != "xyes"; then
+		LIBRESOLV_TRY_LINK([-lresolv])
+	fi
+	if test "x$found_resolv" != "xyes"; then
+		LIBRESOLV_TRY_LINK([-lbind])
+	fi
+	if test "x$found_resolv" != "xyes"; then
+		LIBRESOLV_TRY_LINK([-lsocket])
+	fi
+
+	if test "x$found_resolv" = "xyes"; then
+		AC_DEFINE([HAVE_RES_QUERY], 1, [Define to 1 if you have the DNS functions])
+	else
+		AC_MSG_RESULT(no)
+	fi
+
+	AC_MSG_RESULT($found_resolv)
+
+	AC_SUBST(RESOLV_LIBS)
+])
+m4trace:configure.ac:22: -1- m4_pattern_forbid([^_?A[CHUM]_])
+m4trace:configure.ac:22: -1- m4_pattern_forbid([_AC_])
+m4trace:configure.ac:22: -1- m4_pattern_forbid([^LIBOBJS$], [do not use LIBOBJS directly, use AC_LIBOBJ (see section `AC_LIBOBJ vs LIBOBJS'])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^AS_FLAGS$])
+m4trace:configure.ac:22: -1- m4_pattern_forbid([^_?m4_])
+m4trace:configure.ac:22: -1- m4_pattern_forbid([^dnl$])
+m4trace:configure.ac:22: -1- m4_pattern_forbid([^_?AS_])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^SHELL$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PATH_SEPARATOR$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PACKAGE_NAME$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PACKAGE_TARNAME$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PACKAGE_VERSION$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PACKAGE_STRING$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PACKAGE_BUGREPORT$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^exec_prefix$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^prefix$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^program_transform_name$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^bindir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^sbindir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^libexecdir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^datarootdir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^datadir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^sysconfdir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^sharedstatedir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^localstatedir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^includedir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^oldincludedir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^docdir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^infodir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^htmldir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^dvidir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^pdfdir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^psdir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^libdir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^localedir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^mandir$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PACKAGE_NAME$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PACKAGE_TARNAME$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PACKAGE_VERSION$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PACKAGE_STRING$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^PACKAGE_BUGREPORT$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^DEFS$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^ECHO_C$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^ECHO_N$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^ECHO_T$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^LIBS$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^build_alias$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^host_alias$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^target_alias$])
+m4trace:configure.ac:24: -1- AM_INIT_AUTOMAKE([subdir-objects])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^AM_[A-Z]+FLAGS$])
+m4trace:configure.ac:24: -1- AM_SET_CURRENT_AUTOMAKE_VERSION
+m4trace:configure.ac:24: -1- AM_AUTOMAKE_VERSION([1.11.1])
+m4trace:configure.ac:24: -1- _AM_AUTOCONF_VERSION([2.63])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^INSTALL_PROGRAM$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^INSTALL_SCRIPT$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^INSTALL_DATA$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^am__isrc$])
+m4trace:configure.ac:24: -1- _AM_SUBST_NOTMAKE([am__isrc])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^CYGPATH_W$])
+m4trace:configure.ac:24: -1- _AM_SET_OPTIONS([subdir-objects])
+m4trace:configure.ac:24: -1- _AM_SET_OPTION([subdir-objects])
+m4trace:configure.ac:24: -2- _AM_MANGLE_OPTION([subdir-objects])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^PACKAGE$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^VERSION$])
+m4trace:configure.ac:24: -1- _AM_IF_OPTION([no-define], [], [AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of package])
+ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Version number of package])])
+m4trace:configure.ac:24: -2- _AM_MANGLE_OPTION([no-define])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^PACKAGE$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^VERSION$])
+m4trace:configure.ac:24: -1- AM_SANITY_CHECK
+m4trace:configure.ac:24: -1- AM_MISSING_PROG([ACLOCAL], [aclocal-${am__api_version}])
+m4trace:configure.ac:24: -1- AM_MISSING_HAS_RUN
+m4trace:configure.ac:24: -1- AM_AUX_DIR_EXPAND
+m4trace:configure.ac:24: -1- m4_pattern_allow([^ACLOCAL$])
+m4trace:configure.ac:24: -1- AM_MISSING_PROG([AUTOCONF], [autoconf])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^AUTOCONF$])
+m4trace:configure.ac:24: -1- AM_MISSING_PROG([AUTOMAKE], [automake-${am__api_version}])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^AUTOMAKE$])
+m4trace:configure.ac:24: -1- AM_MISSING_PROG([AUTOHEADER], [autoheader])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^AUTOHEADER$])
+m4trace:configure.ac:24: -1- AM_MISSING_PROG([MAKEINFO], [makeinfo])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^MAKEINFO$])
+m4trace:configure.ac:24: -1- AM_PROG_INSTALL_SH
+m4trace:configure.ac:24: -1- m4_pattern_allow([^install_sh$])
+m4trace:configure.ac:24: -1- AM_PROG_INSTALL_STRIP
+m4trace:configure.ac:24: -1- m4_pattern_allow([^STRIP$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^INSTALL_STRIP_PROGRAM$])
+m4trace:configure.ac:24: -1- AM_PROG_MKDIR_P
+m4trace:configure.ac:24: -1- m4_pattern_allow([^MKDIR_P$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^mkdir_p$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^AWK$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^SET_MAKE$])
+m4trace:configure.ac:24: -1- AM_SET_LEADING_DOT
+m4trace:configure.ac:24: -1- m4_pattern_allow([^am__leading_dot$])
+m4trace:configure.ac:24: -1- _AM_IF_OPTION([tar-ustar], [_AM_PROG_TAR([ustar])], [_AM_IF_OPTION([tar-pax], [_AM_PROG_TAR([pax])],
+			     [_AM_PROG_TAR([v7])])])
+m4trace:configure.ac:24: -2- _AM_MANGLE_OPTION([tar-ustar])
+m4trace:configure.ac:24: -1- _AM_IF_OPTION([tar-pax], [_AM_PROG_TAR([pax])], [_AM_PROG_TAR([v7])])
+m4trace:configure.ac:24: -2- _AM_MANGLE_OPTION([tar-pax])
+m4trace:configure.ac:24: -1- _AM_PROG_TAR([v7])
+m4trace:configure.ac:24: -1- AM_MISSING_PROG([AMTAR], [tar])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^AMTAR$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^am__tar$])
+m4trace:configure.ac:24: -1- m4_pattern_allow([^am__untar$])
+m4trace:configure.ac:24: -1- _AM_IF_OPTION([no-dependencies], [], [AC_PROVIDE_IFELSE([AC_PROG_CC],
+		  [_AM_DEPENDENCIES(CC)],
+		  [define([AC_PROG_CC],
+			  defn([AC_PROG_CC])[_AM_DEPENDENCIES(CC)])])dnl
+AC_PROVIDE_IFELSE([AC_PROG_CXX],
+		  [_AM_DEPENDENCIES(CXX)],
+		  [define([AC_PROG_CXX],
+			  defn([AC_PROG_CXX])[_AM_DEPENDENCIES(CXX)])])dnl
+AC_PROVIDE_IFELSE([AC_PROG_OBJC],
+		  [_AM_DEPENDENCIES(OBJC)],
+		  [define([AC_PROG_OBJC],
+			  defn([AC_PROG_OBJC])[_AM_DEPENDENCIES(OBJC)])])dnl
+])
+m4trace:configure.ac:24: -2- _AM_MANGLE_OPTION([no-dependencies])
+m4trace:configure.ac:24: -1- _AM_IF_OPTION([silent-rules], [AC_REQUIRE([AM_SILENT_RULES])])
+m4trace:configure.ac:24: -2- _AM_MANGLE_OPTION([silent-rules])
+m4trace:configure.ac:28: -1- m4_pattern_allow([^SET_MAKE$])
+m4trace:configure.ac:30: -1- AM_CONFIG_HEADER([include/config.h])
+m4trace:configure.ac:30: -1- _m4_warn([obsolete], [The macro `AM_CONFIG_HEADER' is obsolete.
+You should run autoupdate.], [/usr/share/aclocal-1.11/header.m4:12: AM_CONFIG_HEADER is expanded from...
+configure.ac:30: the top level])
+m4trace:configure.ac:32: -1- m4_pattern_allow([^build$])
+m4trace:configure.ac:32: -1- m4_pattern_allow([^build_cpu$])
+m4trace:configure.ac:32: -1- m4_pattern_allow([^build_vendor$])
+m4trace:configure.ac:32: -1- m4_pattern_allow([^build_os$])
+m4trace:configure.ac:32: -1- m4_pattern_allow([^host$])
+m4trace:configure.ac:32: -1- m4_pattern_allow([^host_cpu$])
+m4trace:configure.ac:32: -1- m4_pattern_allow([^host_vendor$])
+m4trace:configure.ac:32: -1- m4_pattern_allow([^host_os$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^CC$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^CFLAGS$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^LDFLAGS$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^LIBS$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^CPPFLAGS$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^CC$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^CC$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^CC$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^CC$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^ac_ct_CC$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^EXEEXT$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^OBJEXT$])
+m4trace:configure.ac:40: -1- _AM_DEPENDENCIES([CC])
+m4trace:configure.ac:40: -1- AM_SET_DEPDIR
+m4trace:configure.ac:40: -1- m4_pattern_allow([^DEPDIR$])
+m4trace:configure.ac:40: -1- AM_OUTPUT_DEPENDENCY_COMMANDS
+m4trace:configure.ac:40: -1- AM_MAKE_INCLUDE
+m4trace:configure.ac:40: -1- m4_pattern_allow([^am__include$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^am__quote$])
+m4trace:configure.ac:40: -1- AM_DEP_TRACK
+m4trace:configure.ac:40: -1- AM_CONDITIONAL([AMDEP], [test "x$enable_dependency_tracking" != xno])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^AMDEP_TRUE$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^AMDEP_FALSE$])
+m4trace:configure.ac:40: -1- _AM_SUBST_NOTMAKE([AMDEP_TRUE])
+m4trace:configure.ac:40: -1- _AM_SUBST_NOTMAKE([AMDEP_FALSE])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^AMDEPBACKSLASH$])
+m4trace:configure.ac:40: -1- _AM_SUBST_NOTMAKE([AMDEPBACKSLASH])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^CCDEPMODE$])
+m4trace:configure.ac:40: -1- AM_CONDITIONAL([am__fastdepCC], [
+  test "x$enable_dependency_tracking" != xno \
+  && test "$am_cv_CC_dependencies_compiler_type" = gcc3])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^am__fastdepCC_TRUE$])
+m4trace:configure.ac:40: -1- m4_pattern_allow([^am__fastdepCC_FALSE$])
+m4trace:configure.ac:40: -1- _AM_SUBST_NOTMAKE([am__fastdepCC_TRUE])
+m4trace:configure.ac:40: -1- _AM_SUBST_NOTMAKE([am__fastdepCC_FALSE])
+m4trace:configure.ac:41: -1- AM_PROG_CC_C_O
+m4trace:configure.ac:41: -1- m4_pattern_allow([^NO_MINUS_C_MINUS_O$])
+m4trace:configure.ac:49: -1- m4_pattern_allow([^CPP$])
+m4trace:configure.ac:49: -1- m4_pattern_allow([^CPPFLAGS$])
+m4trace:configure.ac:49: -1- m4_pattern_allow([^CPP$])
+m4trace:configure.ac:49: -1- m4_pattern_allow([^GREP$])
+m4trace:configure.ac:49: -1- m4_pattern_allow([^EGREP$])
+m4trace:configure.ac:49: -1- m4_pattern_allow([^STDC_HEADERS$])
+m4trace:configure.ac:138: -1- m4_pattern_allow([^HAVE_LIBPERFSTAT$])
+m4trace:configure.ac:139: -1- m4_pattern_allow([^HAVE_LIBDEVSTAT$])
+m4trace:configure.ac:140: -1- m4_pattern_allow([^HAVE_LIBDEVSTAT$])
+m4trace:configure.ac:143: -1- m4_pattern_allow([^HAVE_LIBEXECINFO$])
+m4trace:configure.ac:145: -1- m4_pattern_allow([^HAVE_LIBM$])
+m4trace:configure.ac:146: -1- m4_pattern_allow([^HAVE_LIBKVM$])
+m4trace:configure.ac:150: -1- LIBRESOLV_CHECK_CONFIG([no])
+m4trace:configure.ac:150: -1- LIBRESOLV_TRY_LINK([])
+m4trace:configure.ac:150: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+m4/resolv.m4:7: LIBRESOLV_TRY_LINK is expanded from...
+m4/resolv.m4:43: LIBRESOLV_CHECK_CONFIG is expanded from...
+configure.ac:150: the top level])
+m4trace:configure.ac:150: -1- LIBRESOLV_TRY_LINK([-lresolv])
+m4trace:configure.ac:150: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+m4/resolv.m4:7: LIBRESOLV_TRY_LINK is expanded from...
+m4/resolv.m4:43: LIBRESOLV_CHECK_CONFIG is expanded from...
+configure.ac:150: the top level])
+m4trace:configure.ac:150: -1- LIBRESOLV_TRY_LINK([-lbind])
+m4trace:configure.ac:150: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+m4/resolv.m4:7: LIBRESOLV_TRY_LINK is expanded from...
+m4/resolv.m4:43: LIBRESOLV_CHECK_CONFIG is expanded from...
+configure.ac:150: the top level])
+m4trace:configure.ac:150: -1- LIBRESOLV_TRY_LINK([-lsocket])
+m4trace:configure.ac:150: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+m4/resolv.m4:7: LIBRESOLV_TRY_LINK is expanded from...
+m4/resolv.m4:43: LIBRESOLV_CHECK_CONFIG is expanded from...
+configure.ac:150: the top level])
+m4trace:configure.ac:150: -1- m4_pattern_allow([^HAVE_RES_QUERY$])
+m4trace:configure.ac:150: -1- m4_pattern_allow([^RESOLV_LIBS$])
+m4trace:configure.ac:173: -1- m4_pattern_allow([^_FILE_OFFSET_BITS$])
+m4trace:configure.ac:173: -1- m4_pattern_allow([^_LARGE_FILES$])
+m4trace:configure.ac:176: -1- m4_pattern_allow([^const$])
+m4trace:configure.ac:177: -1- m4_pattern_allow([^pid_t$])
+m4trace:configure.ac:180: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:180: the top level])
+m4trace:configure.ac:180: -1- m4_pattern_allow([^socklen_t$])
+m4trace:configure.ac:193: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:193: the top level])
+m4trace:configure.ac:212: -1- m4_pattern_allow([^ZBX_SOCKLEN_T$])
+m4trace:configure.ac:220: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:220: the top level])
+m4trace:configure.ac:234: -1- m4_pattern_allow([^ZBX_SIVAL_INT$])
+m4trace:configure.ac:247: -2- m4_pattern_allow([^HAVE_SEMUN$])
+m4trace:configure.ac:240: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:240: the top level])
+m4trace:configure.ac:314: -2- m4_pattern_allow([^HAVE_SYS_SWAP_SWAPTABLE$])
+m4trace:configure.ac:252: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:252: the top level])
+m4trace:configure.ac:327: -2- m4_pattern_allow([^HAVE_SENSORDEV$])
+m4trace:configure.ac:319: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:319: the top level])
+m4trace:configure.ac:346: -2- m4_pattern_allow([^HAVE_SYS_STATVFS64$])
+m4trace:configure.ac:332: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:332: the top level])
+m4trace:configure.ac:365: -2- m4_pattern_allow([^HAVE_SYS_STATFS64$])
+m4trace:configure.ac:351: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:351: the top level])
+m4trace:configure.ac:374: -2- m4_pattern_allow([^HAVE_SOCKADDR_STORAGE_SS_FAMILY$])
+m4trace:configure.ac:370: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:370: the top level])
+m4trace:configure.ac:383: -2- m4_pattern_allow([^HAVE_SYSINFO_MEM_UNIT$])
+m4trace:configure.ac:379: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:379: the top level])
+m4trace:configure.ac:392: -2- m4_pattern_allow([^HAVE_SYSINFO_FREESWAP$])
+m4trace:configure.ac:388: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:388: the top level])
+m4trace:configure.ac:401: -2- m4_pattern_allow([^HAVE_SYSINFO_TOTALSWAP$])
+m4trace:configure.ac:397: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:397: the top level])
+m4trace:configure.ac:410: -2- m4_pattern_allow([^HAVE_SYSINFO_TOTALRAM$])
+m4trace:configure.ac:406: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:406: the top level])
+m4trace:configure.ac:419: -2- m4_pattern_allow([^HAVE_SYSINFO_SHAREDRAM$])
+m4trace:configure.ac:415: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:415: the top level])
+m4trace:configure.ac:428: -2- m4_pattern_allow([^HAVE_SYSINFO_BUFFERRAM$])
+m4trace:configure.ac:424: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:424: the top level])
+m4trace:configure.ac:437: -2- m4_pattern_allow([^HAVE_SYSINFO_FREERAM$])
+m4trace:configure.ac:433: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:433: the top level])
+m4trace:configure.ac:446: -2- m4_pattern_allow([^HAVE_SYSINFO_UPTIME$])
+m4trace:configure.ac:442: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:442: the top level])
+m4trace:configure.ac:455: -2- m4_pattern_allow([^HAVE_SYSINFO_PROCS$])
+m4trace:configure.ac:451: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:451: the top level])
+m4trace:configure.ac:473: -2- m4_pattern_allow([^HAVE_TM_TM_GMTOFF$])
+m4trace:configure.ac:460: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:460: the top level])
+m4trace:configure.ac:493: -2- m4_pattern_allow([^HAVE_UNISTD_SYSCONF$])
+m4trace:configure.ac:484: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:484: the top level])
+m4trace:configure.ac:507: -2- m4_pattern_allow([^HAVE_FUNCTION_INITGROUPS$])
+m4trace:configure.ac:498: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+configure.ac:498: the top level])
+m4trace:configure.ac:521: -2- m4_pattern_allow([^HAVE_FUNCTION_SETEUID$])
+m4trace:configure.ac:512: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+configure.ac:512: the top level])
+m4trace:configure.ac:534: -2- m4_pattern_allow([^HAVE_FUNCTION_SETPROCTITLE$])
+m4trace:configure.ac:526: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+configure.ac:526: the top level])
+m4trace:configure.ac:554: -2- m4_pattern_allow([^HAVE_FUNCTION_SYSCTLBYNAME$])
+m4trace:configure.ac:539: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+configure.ac:539: the top level])
+m4trace:configure.ac:585: -2- m4_pattern_allow([^HAVE_FUNCTION_SYSCTL_KERN_BOOTTIME$])
+m4trace:configure.ac:559: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:559: the top level])
+m4trace:configure.ac:612: -2- m4_pattern_allow([^HAVE_FUNCTION_SYSCTL_HW_NCPU$])
+m4trace:configure.ac:590: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:590: the top level])
+m4trace:configure.ac:639: -2- m4_pattern_allow([^HAVE_FUNCTION_SYSCTL_KERN_MAXFILES$])
+m4trace:configure.ac:617: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:617: the top level])
+m4trace:configure.ac:666: -2- m4_pattern_allow([^HAVE_FUNCTION_SYSCTL_KERN_MAXPROC$])
+m4trace:configure.ac:644: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:644: the top level])
+m4trace:configure.ac:697: -2- m4_pattern_allow([^HAVE_FUNCTION_SYSCTL_KERN_CPTIME$])
+m4trace:configure.ac:671: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:671: the top level])
+m4trace:configure.ac:712: -2- m4_pattern_allow([^HAVE_TIME_CLOCK_GETTIME$])
+m4trace:configure.ac:702: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+configure.ac:702: the top level])
+m4trace:configure.ac:732: -2- m4_pattern_allow([^HAVE___VA_COPY$])
+m4trace:configure.ac:723: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:723: the top level])
+m4trace:configure.ac:747: -2- m4_pattern_allow([^HAVE___VA_ARGS__$])
+m4trace:configure.ac:737: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:737: the top level])
+m4trace:configure.ac:757: -1- _m4_warn([obsolete], [The macro `AC_TYPE_SIGNAL' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/types.m4:699: AC_TYPE_SIGNAL is expanded from...
+configure.ac:757: the top level])
+m4trace:configure.ac:757: -1- m4_pattern_allow([^RETSIGTYPE$])
+m4trace:configure.ac:758: -1- m4_pattern_allow([^LIB@&t@OBJS$])
+m4trace:configure.ac:773: -1- m4_pattern_allow([^HAVE_PROC$])
+m4trace:configure.ac:781: -1- m4_pattern_allow([^HAVE_PROC_STAT$])
+m4trace:configure.ac:789: -1- m4_pattern_allow([^HAVE_PROC_CPUINFO$])
+m4trace:configure.ac:798: -1- m4_pattern_allow([^HAVE_PROC_0_PSINFO$])
+m4trace:configure.ac:806: -1- m4_pattern_allow([^HAVE_PROC_LOADAVG$])
+m4trace:configure.ac:814: -1- m4_pattern_allow([^HAVE_PROC_NET_DEV$])
+m4trace:configure.ac:841: -2- m4_pattern_allow([^HAVE_LONG_LONG_QU$])
+m4trace:configure.ac:828: -1- _m4_warn([obsolete], [The macro `AC_TRY_RUN' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2592: AC_TRY_RUN is expanded from...
+configure.ac:828: the top level])
+m4trace:configure.ac:828: -1- _m4_warn([cross], [AC_RUN_IFELSE called without default to allow cross compiling], [../../lib/autoconf/general.m4:2576: AC_RUN_IFELSE is expanded from...
+../../lib/autoconf/general.m4:2592: AC_TRY_RUN is expanded from...
+configure.ac:828: the top level])
+m4trace:configure.ac:849: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+configure.ac:849: the top level])
+m4trace:configure.ac:869: -2- m4_pattern_allow([^HAVE_AIXOSLEVEL_520004$])
+m4trace:configure.ac:865: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:865: the top level])
+m4trace:configure.ac:882: -2- m4_pattern_allow([^HAVE_AIXOSLEVEL_530006$])
+m4trace:configure.ac:874: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+configure.ac:874: the top level])
+m4trace:configure.ac:895: -1- m4_pattern_allow([^MAC_OS_X$])
+m4trace:configure.ac:931: -1- m4_pattern_allow([^KERNEL_2_6$])
+m4trace:configure.ac:935: -1- m4_pattern_allow([^KERNEL_2_4$])
+m4trace:configure.ac:950: -1- _m4_warn([obsolete], [The macro `AC_TRY_RUN' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2592: AC_TRY_RUN is expanded from...
+configure.ac:950: the top level])
+m4trace:configure.ac:950: -1- _m4_warn([cross], [AC_RUN_IFELSE called without default to allow cross compiling], [../../lib/autoconf/general.m4:2576: AC_RUN_IFELSE is expanded from...
+../../lib/autoconf/general.m4:2592: AC_TRY_RUN is expanded from...
+configure.ac:950: the top level])
+m4trace:configure.ac:966: -1- m4_pattern_allow([^HPUX_VERSION$])
+m4trace:configure.ac:972: -1- _m4_warn([obsolete], [The macro `AC_TRY_RUN' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2592: AC_TRY_RUN is expanded from...
+configure.ac:972: the top level])
+m4trace:configure.ac:972: -1- _m4_warn([cross], [AC_RUN_IFELSE called without default to allow cross compiling], [../../lib/autoconf/general.m4:2576: AC_RUN_IFELSE is expanded from...
+../../lib/autoconf/general.m4:2592: AC_TRY_RUN is expanded from...
+configure.ac:972: the top level])
+m4trace:configure.ac:980: -1- m4_pattern_allow([^ARCH$])
+m4trace:configure.ac:981: -1- m4_pattern_allow([^ARCH$])
+m4trace:configure.ac:983: -1- m4_pattern_allow([^SIZEOF_VOID_P$])
+m4trace:configure.ac:1016: -1- AM_CONDITIONAL([SERVER], [test "x$server" = "xyes"])
+m4trace:configure.ac:1016: -1- m4_pattern_allow([^SERVER_TRUE$])
+m4trace:configure.ac:1016: -1- m4_pattern_allow([^SERVER_FALSE$])
+m4trace:configure.ac:1016: -1- _AM_SUBST_NOTMAKE([SERVER_TRUE])
+m4trace:configure.ac:1016: -1- _AM_SUBST_NOTMAKE([SERVER_FALSE])
+m4trace:configure.ac:1025: -1- AM_CONDITIONAL([PROXY], [test "x$proxy" = "xyes"])
+m4trace:configure.ac:1025: -1- m4_pattern_allow([^PROXY_TRUE$])
+m4trace:configure.ac:1025: -1- m4_pattern_allow([^PROXY_FALSE$])
+m4trace:configure.ac:1025: -1- _AM_SUBST_NOTMAKE([PROXY_TRUE])
+m4trace:configure.ac:1025: -1- _AM_SUBST_NOTMAKE([PROXY_FALSE])
+m4trace:configure.ac:1034: -1- AM_CONDITIONAL([AGENT], [test "x$agent" = "xyes"])
+m4trace:configure.ac:1034: -1- m4_pattern_allow([^AGENT_TRUE$])
+m4trace:configure.ac:1034: -1- m4_pattern_allow([^AGENT_FALSE$])
+m4trace:configure.ac:1034: -1- _AM_SUBST_NOTMAKE([AGENT_TRUE])
+m4trace:configure.ac:1034: -1- _AM_SUBST_NOTMAKE([AGENT_FALSE])
+m4trace:configure.ac:1043: -1- AM_CONDITIONAL([JAVA], [test "x$java" = "xyes"])
+m4trace:configure.ac:1043: -1- m4_pattern_allow([^JAVA_TRUE$])
+m4trace:configure.ac:1043: -1- m4_pattern_allow([^JAVA_FALSE$])
+m4trace:configure.ac:1043: -1- _AM_SUBST_NOTMAKE([JAVA_TRUE])
+m4trace:configure.ac:1043: -1- _AM_SUBST_NOTMAKE([JAVA_FALSE])
+m4trace:configure.ac:1063: -1- m4_pattern_allow([^HAVE_IPV6$])
+m4trace:configure.ac:1072: -1- AX_LIB_IBM_DB2([])
+m4trace:configure.ac:1072: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/ax_lib_ibm_db2.m4:1: AX_LIB_IBM_DB2 is expanded from...
+configure.ac:1072: the top level])
+m4trace:configure.ac:1072: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/ax_lib_ibm_db2.m4:1: AX_LIB_IBM_DB2 is expanded from...
+configure.ac:1072: the top level])
+m4trace:configure.ac:1072: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/ax_lib_ibm_db2.m4:1: AX_LIB_IBM_DB2 is expanded from...
+configure.ac:1072: the top level])
+m4trace:configure.ac:1072: -2- m4_pattern_allow([^HAVE_IBM_DB2$])
+m4trace:configure.ac:1072: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+m4/ax_lib_ibm_db2.m4:1: AX_LIB_IBM_DB2 is expanded from...
+configure.ac:1072: the top level])
+m4trace:configure.ac:1087: -1- AX_LIB_MYSQL([])
+m4trace:configure.ac:1087: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/ax_lib_mysql.m4:49: AX_LIB_MYSQL is expanded from...
+configure.ac:1087: the top level])
+m4trace:configure.ac:1087: -1- m4_pattern_allow([^MYSQL_CONFIG$])
+m4trace:configure.ac:1087: -1- m4_pattern_allow([^HAVE_MYSQL$])
+m4trace:configure.ac:1087: -1- m4_pattern_allow([^MYSQL_VERSION$])
+m4trace:configure.ac:1087: -1- m4_pattern_allow([^MYSQL_CFLAGS$])
+m4trace:configure.ac:1087: -1- m4_pattern_allow([^MYSQL_LDFLAGS$])
+m4trace:configure.ac:1087: -1- m4_pattern_allow([^MYSQL_LIBS$])
+m4trace:configure.ac:1102: -1- AX_LIB_ORACLE_OCI([10.0])
+m4trace:configure.ac:1102: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/ax_lib_oracle_oci.m4:55: AX_LIB_ORACLE_OCI is expanded from...
+configure.ac:1102: the top level])
+m4trace:configure.ac:1102: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/ax_lib_oracle_oci.m4:55: AX_LIB_ORACLE_OCI is expanded from...
+configure.ac:1102: the top level])
+m4trace:configure.ac:1102: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/ax_lib_oracle_oci.m4:55: AX_LIB_ORACLE_OCI is expanded from...
+configure.ac:1102: the top level])
+m4trace:configure.ac:1102: -1- m4_pattern_allow([^ORACLE_OCI_VERSION$])
+m4trace:configure.ac:1102: -1- m4_pattern_allow([^ORACLE_OCI_CFLAGS$])
+m4trace:configure.ac:1102: -1- m4_pattern_allow([^ORACLE_OCI_LDFLAGS$])
+m4trace:configure.ac:1102: -1- m4_pattern_allow([^ORACLE_OCI_LIBS$])
+m4trace:configure.ac:1115: -1- m4_pattern_allow([^ORACLE_CPPFLAGS$])
+m4trace:configure.ac:1116: -1- m4_pattern_allow([^ORACLE_LDFLAGS$])
+m4trace:configure.ac:1117: -1- m4_pattern_allow([^ORACLE_LIBS$])
+m4trace:configure.ac:1119: -1- m4_pattern_allow([^HAVE_ORACLE$])
+m4trace:configure.ac:1126: -1- AX_LIB_POSTGRESQL(["8.1"])
+m4trace:configure.ac:1126: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/ax_lib_postgresql.m4:49: AX_LIB_POSTGRESQL is expanded from...
+configure.ac:1126: the top level])
+m4trace:configure.ac:1126: -1- m4_pattern_allow([^PG_CONFIG$])
+m4trace:configure.ac:1126: -2- m4_pattern_allow([^HAVE_POSTGRESQL$])
+m4trace:configure.ac:1126: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+m4/ax_lib_postgresql.m4:49: AX_LIB_POSTGRESQL is expanded from...
+configure.ac:1126: the top level])
+m4trace:configure.ac:1126: -1- m4_pattern_allow([^POSTGRESQL_CFLAGS$])
+m4trace:configure.ac:1126: -1- m4_pattern_allow([^POSTGRESQL_LDFLAGS$])
+m4trace:configure.ac:1126: -1- m4_pattern_allow([^POSTGRESQL_LIBS$])
+m4trace:configure.ac:1126: -1- m4_pattern_allow([^POSTGRESQL_VERSION$])
+m4trace:configure.ac:1149: -1- AX_LIB_SQLITE3([])
+m4trace:configure.ac:1149: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/ax_lib_sqlite3.m4:41: AX_LIB_SQLITE3 is expanded from...
+configure.ac:1149: the top level])
+m4trace:configure.ac:1149: -1- m4_pattern_allow([^SQLITE3_CPPFLAGS$])
+m4trace:configure.ac:1149: -1- m4_pattern_allow([^SQLITE3_LDFLAGS$])
+m4trace:configure.ac:1149: -1- m4_pattern_allow([^SQLITE3_LIBS$])
+m4trace:configure.ac:1149: -1- m4_pattern_allow([^SQLITE3_VERSION$])
+m4trace:configure.ac:1149: -1- m4_pattern_allow([^HAVE_SQLITE3$])
+m4trace:configure.ac:1166: -2- m4_pattern_allow([^HAVE_FUNCTION_SQLITE3_OPEN_V2$])
+m4trace:configure.ac:1162: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+configure.ac:1162: the top level])
+m4trace:configure.ac:1186: -1- m4_pattern_allow([^HAVE_MULTIROW_INSERT$])
+m4trace:configure.ac:1196: -1- m4_pattern_allow([^DB_CPPFLAGS$])
+m4trace:configure.ac:1197: -1- m4_pattern_allow([^DB_LDFLAGS$])
+m4trace:configure.ac:1198: -1- m4_pattern_allow([^DB_LIBS$])
+m4trace:configure.ac:1208: -1- JABBER_CHECK_CONFIG([])
+m4trace:configure.ac:1208: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1443: AC_ARG_WITH is expanded from...
+m4/jabber.m4:20: JABBER_CHECK_CONFIG is expanded from...
+configure.ac:1208: the top level])
+m4trace:configure.ac:1208: -1- PKG_CHECK_MODULES([IKSEMEL], [iksemel], [
+			 JABBER_INCDIR="$IKSEMEL_CPPFLAGS"
+			 JABBER_LIBDIR="$IKSEMEL_LDFLAGS"
+			 JABBER_LIBS="-liksemel"
+			], [
+			 found_iksemel="no"
+			 found_jabber="no"
+			])
+m4trace:configure.ac:1208: -1- PKG_PROG_PKG_CONFIG
+m4trace:configure.ac:1208: -1- m4_pattern_forbid([^_?PKG_[A-Z_]+$])
+m4trace:configure.ac:1208: -1- m4_pattern_allow([^PKG_CONFIG(_PATH)?$])
+m4trace:configure.ac:1208: -1- m4_pattern_allow([^PKG_CONFIG$])
+m4trace:configure.ac:1208: -1- m4_pattern_allow([^PKG_CONFIG$])
+m4trace:configure.ac:1208: -1- m4_pattern_allow([^IKSEMEL_CFLAGS$])
+m4trace:configure.ac:1208: -1- m4_pattern_allow([^IKSEMEL_LIBS$])
+m4trace:configure.ac:1208: -1- PKG_CHECK_EXISTS([iksemel], [pkg_cv_[]IKSEMEL_CFLAGS=`$PKG_CONFIG --[]cflags "iksemel" 2>/dev/null`], [pkg_failed=yes])
+m4trace:configure.ac:1208: -1- PKG_CHECK_EXISTS([iksemel], [pkg_cv_[]IKSEMEL_LIBS=`$PKG_CONFIG --[]libs "iksemel" 2>/dev/null`], [pkg_failed=yes])
+m4trace:configure.ac:1208: -1- _PKG_SHORT_ERRORS_SUPPORTED
+m4trace:configure.ac:1208: -1- m4_pattern_allow([^HAVE_IKSEMEL$])
+m4trace:configure.ac:1208: -1- m4_pattern_allow([^HAVE_JABBER$])
+m4trace:configure.ac:1208: -1- m4_pattern_allow([^JABBER_CPPFLAGS$])
+m4trace:configure.ac:1208: -1- m4_pattern_allow([^JABBER_LDFLAGS$])
+m4trace:configure.ac:1208: -1- m4_pattern_allow([^JABBER_LIBS$])
+m4trace:configure.ac:1221: -1- LIBXML2_CHECK_CONFIG([no])
+m4trace:configure.ac:1221: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1443: AC_ARG_WITH is expanded from...
+m4/libxml2.m4:20: LIBXML2_CHECK_CONFIG is expanded from...
+configure.ac:1221: the top level])
+m4trace:configure.ac:1221: -1- m4_pattern_allow([^LIBXML2_CONFIG$])
+m4trace:configure.ac:1221: -1- m4_pattern_allow([^HAVE_LIBXML2$])
+m4trace:configure.ac:1221: -1- m4_pattern_allow([^LIBXML2_VERSION$])
+m4trace:configure.ac:1221: -1- m4_pattern_allow([^LIBXML2_CFLAGS$])
+m4trace:configure.ac:1221: -1- m4_pattern_allow([^LIBXML2_LDFLAGS$])
+m4trace:configure.ac:1221: -1- m4_pattern_allow([^LIBXML2_LIBS$])
+m4trace:configure.ac:1237: -1- LIBUNIXODBC_CHECK_CONFIG([no])
+m4trace:configure.ac:1237: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1443: AC_ARG_WITH is expanded from...
+m4/libunixodbc.m4:20: LIBUNIXODBC_CHECK_CONFIG is expanded from...
+configure.ac:1237: the top level])
+m4trace:configure.ac:1237: -1- m4_pattern_allow([^ODBC_CONFIG$])
+m4trace:configure.ac:1237: -1- m4_pattern_allow([^HAVE_LIBODBC$])
+m4trace:configure.ac:1237: -1- m4_pattern_allow([^HAVE_UNIXODBC$])
+m4trace:configure.ac:1237: -1- m4_pattern_allow([^UNIXODBC_LDFLAGS$])
+m4trace:configure.ac:1237: -1- m4_pattern_allow([^UNIXODBC_CFLAGS$])
+m4trace:configure.ac:1237: -1- m4_pattern_allow([^UNIXODBC_LIBS$])
+m4trace:configure.ac:1252: -1- LIBNETSNMP_CHECK_CONFIG([no])
+m4trace:configure.ac:1252: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1443: AC_ARG_WITH is expanded from...
+m4/netsnmp.m4:20: LIBNETSNMP_CHECK_CONFIG is expanded from...
+configure.ac:1252: the top level])
+m4trace:configure.ac:1252: -1- m4_pattern_allow([^_libnetsnmp_config$])
+m4trace:configure.ac:1252: -1- m4_pattern_allow([^HAVE_LIBNETSNMP$])
+m4trace:configure.ac:1252: -2- m4_pattern_allow([^HAVE_SNMP_SESSION_LOCALNAME$])
+m4trace:configure.ac:1252: -1- _m4_warn([obsolete], [The macro `AC_TRY_COMPILE' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2470: AC_TRY_COMPILE is expanded from...
+m4/netsnmp.m4:20: LIBNETSNMP_CHECK_CONFIG is expanded from...
+configure.ac:1252: the top level])
+m4trace:configure.ac:1252: -1- m4_pattern_allow([^HAVE_NETSNMP$])
+m4trace:configure.ac:1252: -1- m4_pattern_allow([^HAVE_SNMP$])
+m4trace:configure.ac:1252: -1- m4_pattern_allow([^SNMP_NO_DEBUGGING$])
+m4trace:configure.ac:1252: -1- m4_pattern_allow([^SNMP_CFLAGS$])
+m4trace:configure.ac:1252: -1- m4_pattern_allow([^SNMP_LDFLAGS$])
+m4trace:configure.ac:1252: -1- m4_pattern_allow([^SNMP_LIBS$])
+m4trace:configure.ac:1268: -1- LIBSSH2_CHECK_CONFIG([no])
+m4trace:configure.ac:1268: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1443: AC_ARG_WITH is expanded from...
+m4/libssh2.m4:52: LIBSSH2_CHECK_CONFIG is expanded from...
+configure.ac:1268: the top level])
+m4trace:configure.ac:1268: -1- LIBSSH2_ACCEPT_VERSION([/usr/include/libssh2.h])
+m4trace:configure.ac:1268: -1- LIBSSH2_ACCEPT_VERSION([/usr/local/include/libssh2.h])
+m4trace:configure.ac:1268: -1- LIBSSH2_ACCEPT_VERSION([$_libssh2_dir/include/libssh2.h])
+m4trace:configure.ac:1268: -1- LIBSSH2_TRY_LINK([no])
+m4trace:configure.ac:1268: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+m4/libssh2.m4:24: LIBSSH2_TRY_LINK is expanded from...
+m4/libssh2.m4:52: LIBSSH2_CHECK_CONFIG is expanded from...
+configure.ac:1268: the top level])
+m4trace:configure.ac:1268: -1- m4_pattern_allow([^HAVE_SSH2$])
+m4trace:configure.ac:1268: -1- m4_pattern_allow([^SSH2_CFLAGS$])
+m4trace:configure.ac:1268: -1- m4_pattern_allow([^SSH2_LDFLAGS$])
+m4trace:configure.ac:1268: -1- m4_pattern_allow([^SSH2_LIBS$])
+m4trace:configure.ac:1287: -1- LIBOPENIPMI_CHECK_CONFIG([no])
+m4trace:configure.ac:1287: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1443: AC_ARG_WITH is expanded from...
+m4/openipmi.m4:20: LIBOPENIPMI_CHECK_CONFIG is expanded from...
+configure.ac:1287: the top level])
+m4trace:configure.ac:1287: -1- m4_pattern_allow([^HAVE_OPENIPMI$])
+m4trace:configure.ac:1287: -1- m4_pattern_allow([^OPENIPMI_DEPRECATED$])
+m4trace:configure.ac:1287: -1- m4_pattern_allow([^OPENIPMI_CFLAGS$])
+m4trace:configure.ac:1287: -1- m4_pattern_allow([^OPENIPMI_LDFLAGS$])
+m4trace:configure.ac:1287: -1- m4_pattern_allow([^OPENIPMI_LIBS$])
+m4trace:configure.ac:1304: -1- m4_pattern_allow([^JAVAC$])
+m4trace:configure.ac:1308: -1- m4_pattern_allow([^JAR$])
+m4trace:configure.ac:1314: -1- AM_CONDITIONAL([JABBER], [test "x$found_jabber" = "xyes"])
+m4trace:configure.ac:1314: -1- m4_pattern_allow([^JABBER_TRUE$])
+m4trace:configure.ac:1314: -1- m4_pattern_allow([^JABBER_FALSE$])
+m4trace:configure.ac:1314: -1- _AM_SUBST_NOTMAKE([JABBER_TRUE])
+m4trace:configure.ac:1314: -1- _AM_SUBST_NOTMAKE([JABBER_FALSE])
+m4trace:configure.ac:1315: -1- AM_CONDITIONAL([WITH_ODBC], [test "x$have_unixodbc" = "xyes"])
+m4trace:configure.ac:1315: -1- m4_pattern_allow([^WITH_ODBC_TRUE$])
+m4trace:configure.ac:1315: -1- m4_pattern_allow([^WITH_ODBC_FALSE$])
+m4trace:configure.ac:1315: -1- _AM_SUBST_NOTMAKE([WITH_ODBC_TRUE])
+m4trace:configure.ac:1315: -1- _AM_SUBST_NOTMAKE([WITH_ODBC_FALSE])
+m4trace:configure.ac:1319: -1- LIBLDAP_CHECK_CONFIG([no])
+m4trace:configure.ac:1319: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1443: AC_ARG_WITH is expanded from...
+m4/ldap.m4:20: LIBLDAP_CHECK_CONFIG is expanded from...
+configure.ac:1319: the top level])
+m4trace:configure.ac:1319: -1- m4_pattern_allow([^HAVE_LDAP$])
+m4trace:configure.ac:1319: -1- m4_pattern_allow([^LDAP_DEPRECATED$])
+m4trace:configure.ac:1319: -1- m4_pattern_allow([^HAVE_LIBGNUTLS$])
+m4trace:configure.ac:1319: -1- m4_pattern_allow([^HAVE_LIBPTHREAD$])
+m4trace:configure.ac:1319: -1- m4_pattern_allow([^HAVE_LIBSASL2$])
+m4trace:configure.ac:1319: -1- m4_pattern_allow([^LDAP_CPPFLAGS$])
+m4trace:configure.ac:1319: -1- m4_pattern_allow([^LDAP_LDFLAGS$])
+m4trace:configure.ac:1319: -1- m4_pattern_allow([^LDAP_LIBS$])
+m4trace:configure.ac:1338: -1- LIBCURL_CHECK_CONFIG([], [7.13.1], [], [])
+m4trace:configure.ac:1338: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1443: AC_ARG_WITH is expanded from...
+m4/libcurl.m4:38: LIBCURL_CHECK_CONFIG is expanded from...
+configure.ac:1338: the top level])
+m4trace:configure.ac:1338: -1- m4_pattern_allow([^AWK$])
+m4trace:configure.ac:1338: -1- m4_pattern_allow([^_libcurl_config$])
+m4trace:configure.ac:1338: -1- m4_pattern_allow([^HAVE_LIBCURL$])
+m4trace:configure.ac:1338: -2- m4_pattern_allow([^curl_free$])
+m4trace:configure.ac:1338: -2- m4_pattern_allow([^HAVE_FUNCTION_CURL_EASY_ESCAPE$])
+m4trace:configure.ac:1338: -1- m4_pattern_allow([^HAVE_LIBCURL$])
+m4trace:configure.ac:1338: -1- m4_pattern_allow([^LIBCURL_CFLAGS$])
+m4trace:configure.ac:1338: -1- m4_pattern_allow([^LIBCURL_LDFLAGS$])
+m4trace:configure.ac:1338: -1- m4_pattern_allow([^LIBCURL_LIBS$])
+m4trace:configure.ac:1361: -1- LIBICONV_CHECK_CONFIG([no])
+m4trace:configure.ac:1361: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1443: AC_ARG_WITH is expanded from...
+m4/iconv.m4:32: LIBICONV_CHECK_CONFIG is expanded from...
+configure.ac:1361: the top level])
+m4trace:configure.ac:1361: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/iconv.m4:32: LIBICONV_CHECK_CONFIG is expanded from...
+configure.ac:1361: the top level])
+m4trace:configure.ac:1361: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:209: AC_HELP_STRING is expanded from...
+m4/iconv.m4:32: LIBICONV_CHECK_CONFIG is expanded from...
+configure.ac:1361: the top level])
+m4trace:configure.ac:1361: -1- LIBICONV_TRY_LINK([no])
+m4trace:configure.ac:1361: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+m4/iconv.m4:17: LIBICONV_TRY_LINK is expanded from...
+m4/iconv.m4:32: LIBICONV_CHECK_CONFIG is expanded from...
+configure.ac:1361: the top level])
+m4trace:configure.ac:1361: -1- LIBICONV_TRY_LINK([no])
+m4trace:configure.ac:1361: -1- _m4_warn([obsolete], [The macro `AC_TRY_LINK' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:2527: AC_TRY_LINK is expanded from...
+m4/iconv.m4:17: LIBICONV_TRY_LINK is expanded from...
+m4/iconv.m4:32: LIBICONV_CHECK_CONFIG is expanded from...
+configure.ac:1361: the top level])
+m4trace:configure.ac:1361: -1- m4_pattern_allow([^HAVE_ICONV$])
+m4trace:configure.ac:1361: -1- m4_pattern_allow([^ICONV_CFLAGS$])
+m4trace:configure.ac:1361: -1- m4_pattern_allow([^ICONV_LDFLAGS$])
+m4trace:configure.ac:1370: -1- m4_pattern_allow([^RANLIB$])
+m4trace:configure.ac:1372: -1- m4_pattern_allow([^SERVER_LDFLAGS$])
+m4trace:configure.ac:1373: -1- m4_pattern_allow([^SERVER_LIBS$])
+m4trace:configure.ac:1375: -1- m4_pattern_allow([^PROXY_LDFLAGS$])
+m4trace:configure.ac:1376: -1- m4_pattern_allow([^PROXY_LIBS$])
+m4trace:configure.ac:1378: -1- m4_pattern_allow([^AGENT_LDFLAGS$])
+m4trace:configure.ac:1379: -1- m4_pattern_allow([^AGENT_LIBS$])
+m4trace:configure.ac:1393: -1- m4_pattern_allow([^MKDIR_P$])
+m4trace:configure.ac:1403: -1- _m4_warn([obsolete], [AC_OUTPUT should be used without arguments.
+You should run autoupdate.], [])
+m4trace:configure.ac:1403: -1- m4_pattern_allow([^LIB@&t@OBJS$])
+m4trace:configure.ac:1403: -1- m4_pattern_allow([^LTLIBOBJS$])
+m4trace:configure.ac:1403: -1- AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])
+m4trace:configure.ac:1403: -1- m4_pattern_allow([^am__EXEEXT_TRUE$])
+m4trace:configure.ac:1403: -1- m4_pattern_allow([^am__EXEEXT_FALSE$])
+m4trace:configure.ac:1403: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_TRUE])
+m4trace:configure.ac:1403: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_FALSE])
+m4trace:configure.ac:1403: -1- _AC_AM_CONFIG_HEADER_HOOK(["$ac_file"])
+m4trace:configure.ac:1403: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
