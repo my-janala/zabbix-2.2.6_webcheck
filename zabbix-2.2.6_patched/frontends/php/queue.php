@@ -94,7 +94,8 @@ if ($config == QUEUE_OVERVIEW) {
 		ITEM_TYPE_SSH,
 		ITEM_TYPE_TELNET,
 		ITEM_TYPE_JMX,
-		ITEM_TYPE_CALCULATED
+		ITEM_TYPE_CALCULATED,
+		ITEM_TYPE_WEB
 	);
 
 	$table->setHeader(array(

@@ -121,7 +121,7 @@
 	function displayKeyButton() {
 		var type = parseInt(jQuery('#type').val());
 
-		if (type == 0 || type == 7 || type == 3 || type == 5 || type == 8 || type == 17) {
+		if (type == 0 || type == 7 || type == 3 || type == 5 || type == 8 || type == 17 || type == 18) {
 			jQuery('#keyButton').prop('disabled', false);
 		}
 		else {

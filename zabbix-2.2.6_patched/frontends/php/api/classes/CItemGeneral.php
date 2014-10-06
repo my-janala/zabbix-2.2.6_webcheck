@@ -388,6 +388,10 @@ abstract class CItemGeneral extends CZBXAPI {
 					}
 				}
 			}
+			// web check
+			if ($fullItem['type'] == ITEM_TYPE_WEB && $fullItem['value_type'] != ITEM_VALUE_TYPE_UINT64) {
+				self::exception(ZBX_API_ERROR_PARAMETERS, _('Type of information must be "Numeric" for web check items.'));
+			}
 
 			// check that the given applications belong to the item's host
 			if (isset($item['applications']) && $item['applications']) {

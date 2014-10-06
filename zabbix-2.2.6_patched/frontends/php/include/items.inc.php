@@ -95,7 +95,8 @@ function item_type2str($type = null) {
 		ITEM_TYPE_TELNET => _('TELNET agent'),
 		ITEM_TYPE_JMX => _('JMX agent'),
 		ITEM_TYPE_CALCULATED => _('Calculated'),
-		ITEM_TYPE_HTTPTEST => _('Web monitoring')
+		ITEM_TYPE_HTTPTEST => _('Web monitoring'),
+		ITEM_TYPE_WEB => _('Web check')
 	);
 	if (is_null($type)) {
 		return $types;
@@ -298,7 +299,8 @@ function itemTypeInterface($type = null) {
 		ITEM_TYPE_EXTERNAL => INTERFACE_TYPE_ANY,
 		ITEM_TYPE_SSH => INTERFACE_TYPE_ANY,
 		ITEM_TYPE_TELNET => INTERFACE_TYPE_ANY,
-		ITEM_TYPE_JMX => INTERFACE_TYPE_JMX
+		ITEM_TYPE_JMX => INTERFACE_TYPE_JMX,
+		ITEM_TYPE_WEB => INTERFACE_TYPE_AGENT
 	);
 	if (is_null($type)) {
 		return $types;

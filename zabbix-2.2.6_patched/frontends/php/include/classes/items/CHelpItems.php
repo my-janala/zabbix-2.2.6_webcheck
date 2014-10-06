@@ -898,6 +898,28 @@ class CHelpItems {
 					'key' => 'zabbix[wcache,<cache>,<mode>]',
 					'description' => _('Data cache statistics. Cache - one of values (modes: all, float, uint, str, log, text), history (modes: pfree, total, used, free), trend (modes: pfree, total, used, free), text (modes: pfree, total, used, free).')
 				)
+			),
+			ITEM_TYPE_WEB => array(
+				array(
+					'key' => 'web.check[<required response>,<ip/dns>,<port>,<http host>,<uri>,<timeout>,<matchstr1>, ... ,<matchstr5>]',
+					'description' => _('Web check request. You can check several availability aspects of web sites.')
+				),
+				array(
+					'key' => 'web.check.img[<ip/dns>,<port>,<http host>,<uri>,<timeout>]',
+					'description' => _('Web check request. Return content type must be image.')
+				),
+				array(
+					'key' => 'web.check.time[<ip/dns>,<port>,<http host>,<uri>,<timeout>,<time pattern>]',
+					'description' => _('Web check request. Return specified response time.')
+				),
+				array(
+					'key' => 'web.check.header[<required response>,<ip/dns>,<port>,<http host>,<uri>,<timeout>,<matchstr1>, ..., <matchstr5>]',
+					'description' => _('Web check request. Check only header for match patterns.')
+				),
+				array(
+					'key' => 'web.check.bauth[<required response>,<ip/dns>,<port>,<http host>,<uri>,<timeout>,<user:passwd>,<matchstr1>, ... ,<matchstr5>]',
+					'description' => _('Web check request. Like web.check item but with basic http auth.')
+				)
 			)
 		);
 	}
